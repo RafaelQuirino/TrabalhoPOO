@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,23 +20,35 @@ import javax.swing.border.Border;
 
 public class Login extends JPanel {
 	
+	// GUI constants ----------------------------------------------------------
+	
 	private static final int WIDTH = 450;
 	private static final int HEIGHT = 250;
 	
 	private static final Color BG_COLOR = Color.WHITE;
 	
 	private static final Color LOGIN_BG_COLOR = new Color(250,250,250);
-	private static final Color LOGIN_BORDER_COLOR = new Color(230,230,230);
+	private static final Color LOGIN_BORDER_COLOR = new Color(220,220,220);
 	
 	private static final String LABEL_TEXT = "Login";
 	
-	private JPanel innerPanel;
-	private JPanel headerPanel;
+	// Instance fields --------------------------------------------------------
 	
-	private MainPanel mainPanel;
+	private JButton button;
+	
+	private JTextField userField;
+	
+	private JTextField passwordField;
+	
+	// Constructors -----------------------------------------------------------
 	
 	public Login()
 	{
+		JPanel innerPanel;
+		JPanel headerPanel;
+		
+		MainPanel mainPanel;
+		
 		innerPanel = new JPanel();
 		innerPanel.setOpaque(false);
 		innerPanel.setLayout(new BorderLayout());
@@ -61,6 +75,40 @@ public class Login extends JPanel {
 		setPreferredSize(new Dimension(100,100));
 	}
 	
+	// Methods ----------------------------------------------------------------
+	
+	/**
+	 * 
+	 */
+	public void addHandler(ActionListener l)
+	{
+		button.addActionListener(l);
+	}
+	
+	public void resetAuthentication()
+	{
+		passwordField.setText("");
+		userField.requestFocus();
+	}
+	
+	/**
+	 * 
+	 */
+	public String getUser()
+	{
+		return userField.getText();
+	}
+	
+	/**
+	 * 
+	 */
+	public String getPassword()
+	{
+		return passwordField.getText();
+	}
+	
+	// Private classes --------------------------------------------------------
+	
 	private class MainPanel extends JPanel
 	{
 		
@@ -69,6 +117,7 @@ public class Login extends JPanel {
 			setPreferredSize(new Dimension(Login.WIDTH, Login.HEIGHT));
 			setBackground(LOGIN_BG_COLOR);
 			setBorder(BorderFactory.createLineBorder(LOGIN_BORDER_COLOR));
+			setBorder(BorderFactory.createEtchedBorder());
 			setLayout(new FlowLayout(FlowLayout.CENTER, 0, 35));
 			
 			JPanel innerPanel = new JPanel(),
@@ -78,10 +127,19 @@ public class Login extends JPanel {
 			JLabel usuarioLabel = new JLabel("Usuário"),
 				   senhaLabel = new JLabel("Senha");
 			
-			JTextField usuarioField = new JTextField();
-			JPasswordField senhaField = new JPasswordField();
+			userField = new JTextField();
+			passwordField = new JPasswordField();
 			
-			JButton button = new JButton("Entrar");
+			passwordField.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					button.doClick();
+				}
+			});
+			
+			userField.requestFocus(true);
+			
+			button = new JButton("Entrar");
 			
 			Font font = new Font("Serif", Font.PLAIN, 20);
 			
@@ -111,12 +169,12 @@ public class Login extends JPanel {
 			rightPanel.setBorder(border1);
 			
 			Insets textFieldInsets = new Insets(0,10,0,10);
-			usuarioField.setMargin(textFieldInsets);
-			senhaField.setMargin(textFieldInsets);
+			userField.setMargin(textFieldInsets);
+			passwordField.setMargin(textFieldInsets);
 			
 			Font textFieldFont = new Font("Serif", Font.PLAIN, 16);
-			usuarioField.setFont(textFieldFont);
-			senhaField.setFont(textFieldFont);
+			userField.setFont(textFieldFont);
+			passwordField.setFont(textFieldFont);
 			
 			leftPanel.setLayout(new GridLayout(2, 1, 0, 30));
 			rightPanel.setLayout(new GridLayout(2, 1, 0, 30));
@@ -127,8 +185,8 @@ public class Login extends JPanel {
 			leftPanel.add(usuarioLabel);
 			leftPanel.add(senhaLabel);
 			
-			rightPanel.add(usuarioField);
-			rightPanel.add(senhaField);
+			rightPanel.add(userField);
+			rightPanel.add(passwordField);
 			
 			add(innerPanel);
 		}
