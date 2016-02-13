@@ -69,7 +69,7 @@ public class Login extends JPanel {
 			setPreferredSize(new Dimension(Login.WIDTH, Login.HEIGHT));
 			setBackground(LOGIN_BG_COLOR);
 			setBorder(BorderFactory.createLineBorder(LOGIN_BORDER_COLOR));
-			setLayout(new FlowLayout(FlowLayout.CENTER, 0, 25));
+			setLayout(new FlowLayout(FlowLayout.CENTER, 0, 35));
 			
 			JPanel innerPanel = new JPanel(),
 				   leftPanel = new JPanel(),
@@ -86,8 +86,8 @@ public class Login extends JPanel {
 			Font font = new Font("Serif", Font.PLAIN, 20);
 			
 			innerPanel.setPreferredSize(new Dimension(
-				Login.WIDTH - 50,
-				Login.HEIGHT - 50
+				Login.WIDTH - 70,
+				Login.HEIGHT - 70
 			));
 			
 			innerPanel.setLayout(new BorderLayout());
@@ -106,7 +106,7 @@ public class Login extends JPanel {
 			
 			leftPanel.setPreferredSize(new Dimension(120,0));
 			
-			Border border1 = BorderFactory.createEmptyBorder(0,0,20,0);
+			Border border1 = BorderFactory.createEmptyBorder(0,0,30,0);
 			leftPanel.setBorder(border1);
 			rightPanel.setBorder(border1);
 			
