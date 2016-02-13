@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import app.Model;
 
 public class Usuario extends Model{
@@ -10,11 +12,17 @@ public class Usuario extends Model{
 	
 	public static final String ALUNO = "Aluno";
 	
+	public static final String ADMINISTRADOR = "Administrador";
+	
 	// Static fields ----------------------------------------------------------
 	
 	private static Usuario usuarioAtual;
 	
 	// Instance fields --------------------------------------------------------
+	
+	private String login;
+	
+	private String senha;
 	
 	private String tipo;
 	
@@ -31,12 +39,17 @@ public class Usuario extends Model{
 	
 	public static boolean autenticar(String usuario, String senha)
 	{
-		Usuario u = new Usuario();
-		u.setPessoa(new Pessoa("Joao"));
-		u.setTipo(Usuario.ALUNO);
+		ArrayList<Usuario> usuarios = Model.getData("usuario");
 		
-		usuarioAtual = u;
-		return true;
+		for(Usuario u : usuarios)
+		{
+			if(u.getSenha().equals(senha))
+			{
+				usuarioAtual = u;
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static Usuario getUsuarioAtual()
@@ -60,5 +73,21 @@ public class Usuario extends Model{
 	
 	public String getTipo(){
 		return tipo;
+	}
+	
+	public void setLogin(String login){
+		this.login = login;
+	}
+	
+	public String getLogin(){
+		return login;
+	}
+	
+	public void setSenha(String senha){
+		this.senha = senha;
+	}
+	
+	public String getSenha(){
+		return senha;
 	}
 }

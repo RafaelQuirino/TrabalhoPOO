@@ -1,6 +1,8 @@
 package model;
 
-public class Pessoa {
+import app.Model;
+
+public class Pessoa extends Model{
 
 	// Instance fields --------------------------------------------------------
 	

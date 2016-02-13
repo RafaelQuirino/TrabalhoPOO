@@ -57,9 +57,9 @@ public class Frame extends JFrame {
 		screen.addMenu("Avaliações", null);
 		screen.addMenu("Frequência", null);
 		
-		String text = usuario.getTipo() + ": " + usuario.getPessoa().getNome();
+		//String text = usuario.getTipo() + ": " + usuario.getPessoa().getNome();
 		
-		screen.setHeaderText(text);
+		//screen.setHeaderText(text);
 		
 		setContentPane(screen);
 		validate();
