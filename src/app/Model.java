@@ -12,6 +12,11 @@ public abstract class Model implements Serializable{
 	
 	// Constants --------------------------------------------------------------
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6743215224482974701L;
+
 	public static final String DEFAULT_PATH = 
 			System.getProperty("user.home") +
 			File.separator + 
@@ -25,11 +30,35 @@ public abstract class Model implements Serializable{
 	/**
 	 * 
 	 */
-	protected static ArrayList getData(String model)
+	protected static ArrayList getData(Class model)
 	{
-		String path = DEFAULT_PATH + model + DEFAULT_EXTENSION;
+		return readObject(getPath(model));
+	}
+	
+	/**
+	 * 
+	 */
+	public static void createModel(Model model)
+	{
+		appendObject(model, getPath(model));
+	}
+	
+	/**
+	 * 
+	 */
+	private static String getPath(Object object)
+	{
+		String path = DEFAULT_PATH;
+		String parts[];
 		
-		return readObject(path);
+		if(object instanceof Class)
+			parts = ((Class)object).getName().split("\\.");
+		else
+			parts = object.getClass().getName().split("\\.");
+		
+		path += parts[parts.length-1].toLowerCase();
+		path += DEFAULT_EXTENSION;
+		return path;
 	}
 	
 	/**
@@ -59,7 +88,11 @@ public abstract class Model implements Serializable{
 		try
 		{
 			ArrayList objects = readObject(path);
-			objects.add(objects);
+			System.out.println("apend begin");
+			System.out.println(objects.size());
+			System.out.println(objects);
+			System.out.println("apend end");
+			objects.add(object);
 			writeObject(objects, path);
 			
 		}

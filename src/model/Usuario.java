@@ -39,10 +39,11 @@ public class Usuario extends Model{
 	
 	public static boolean autenticar(String usuario, String senha)
 	{
-		ArrayList<Usuario> usuarios = Model.getData("usuario");
-		
-		for(Usuario u : usuarios)
+		ArrayList<Usuario> usuarios = Model.getData(Usuario.class);
+		System.out.println(usuarios.get(0));
+		for(int i = 0; i < usuarios.size(); i++)
 		{
+			Usuario u = (Usuario) usuarios.get(i);
 			if(u.getSenha().equals(senha))
 			{
 				usuarioAtual = u;

@@ -6,11 +6,11 @@ public class Professor extends Pessoa {
 	
 	private String disciplina;
 
-	void setRegistro(String registro) {
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 
-	String getRegistro() {
+	public String getRegistro() {
 		return this.registro;
 	}
 

@@ -59,10 +59,12 @@ public class Frame extends JFrame {
 				screen = new AdminScreen();
 				screen.setHandler(adminHandler);
 				break;
+			
+			case Usuario.PROFESSOR:
+				//screen = new ProfessorScreen();
+				//screen.setHandler(professorHandler);
 		}
-		
 		screen.setHeaderText(usuario.getTipo() + ": " + usuario.getPessoa().getNome());
-		
 		screen.setSairHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				setContentPane(login);

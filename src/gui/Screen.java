@@ -68,6 +68,8 @@ public abstract class Screen extends JPanel {
 		setLayout(new BorderLayout());
 		
 		display.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+		//display.setOpaque(false);
+		//display.setBackground(Color.white);
 		
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(path, BorderLayout.NORTH);
@@ -102,6 +104,7 @@ public abstract class Screen extends JPanel {
 		display.removeAll();
 		display.add(panel);
 		validate();
+		repaint();
 	}
 	
 	// Setters and Getters ----------------------------------------------------

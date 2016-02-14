@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 
 import app.Application;
@@ -10,18 +12,20 @@ public class AdminScreen extends Screen {
 	// Constants --------------------------------------------------------------
 	
 	private static final String adminLabels[] = {
-		"Cadastrar Professor",
-		"Cadastrar Aluno"
+		"Professores",
+		"Alunos"
 	};
 	
 	private static final String adminCommands[] = {
-		Application.ADMIN_CADASTRAR_PROFESSOR_COMMAND,
-		Application.ADMIN_CADASTRAR_ALUNO_COMAND
+		Application.ADMIN_PROFESSORES,
+		Application.ADMIN_ALUNOS
 	};
 	
 	// Instance fields --------------------------------------------------------
 	
 	private JButton buttons[];
+	
+	private ProfessoresPanel professoresPanel;
 	
 	private CadastroProfessor cadastroProfessor;
 	
@@ -33,14 +37,47 @@ public class AdminScreen extends Screen {
 		
 		addPath(Usuario.ADMINISTRADOR);
 		
+		professoresPanel = new ProfessoresPanel();
 		cadastroProfessor = new CadastroProfessor();
 	}
 	
 	// Methods ----------------------------------------------------------------
 	
+	/**
+	 * 
+	 */
+	public void showProfessores()
+	{
+		setDisplay(professoresPanel);
+	}
+	
+	/**
+	 * 
+	 */
 	public void showCadastroProfessor()
 	{
 		setDisplay(cadastroProfessor);
 	}
 	
+	/**
+	 * 
+	 */
+	public void setHandler(ActionListener handler)
+	{
+		super.setHandler(handler);
+		cadastroProfessor.setHandler(handler);
+		professoresPanel.setHandler(handler);
+	}
+	
+	// Setters and Getters ----------------------------------------------------
+	
+	public CadastroProfessor getCadastroProfessor()
+	{
+		return cadastroProfessor;
+	}
+	
+	public ProfessoresPanel getProfessoresPanel()
+	{
+		return professoresPanel;
+	}
 }
