@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 
 import gui.Frame;
 import gui.Login;
-import gui.Screen;
 import model.Usuario;
 
 public class LoginHandler implements ActionListener{

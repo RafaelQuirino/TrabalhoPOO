@@ -1,32 +1,24 @@
 package model;
 
-public class Professor {
+public class Professor extends Pessoa {
+
+	private String registro;
 	
-	 private String Name, Registro, Endereco;
-	
-	void setName(String name){
-		this.Name = name;
-	}
-	
-	String getName(){
-		return this.Name;
-	}
-	
-	void setRegistro(String registro){
-		this.Registro = registro;
-	}
-	
-	String getRegistro(){
-		return this.Registro;
-	}
-	
-	void setEndereco(String end){
-		this.Endereco = end;
-	}
-	
-	String getEndereco(){
-		return this.Endereco;
+	private String disciplina;
+
+	void setRegistro(String registro) {
+		this.registro = registro;
 	}
 
+	String getRegistro() {
+		return this.registro;
+	}
 
+	public String getDisciplina() {
+		return disciplina;
+	}
+
+	public void setDisciplina(String disciplina) {
+		this.disciplina = disciplina;
+	}
 }

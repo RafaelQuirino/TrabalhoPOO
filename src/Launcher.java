@@ -41,7 +41,9 @@ public class Launcher {
 						usuario.setLogin("admin");
 						usuario.setSenha("admin");
 						usuario.setTipo(Usuario.ADMINISTRADOR);
-						usuario.setPessoa(new Pessoa("Administrador"));
+						Pessoa p = new Pessoa();
+						p.setNome("Administrador");
+						usuario.setPessoa(p);
 						arrayList.add(usuario);
 					}
 					

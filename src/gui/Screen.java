@@ -6,10 +6,14 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Screen extends JPanel {
+import app.AdminHandler;
+import model.Usuario;
+
+public abstract class Screen extends JPanel {
 
 	// GUI constants ----------------------------------------------------------
 	
@@ -19,29 +23,51 @@ public class Screen extends JPanel {
 	
 	// Instance fields --------------------------------------------------------
 	
-	JLabel headerLabel;
+	private JLabel headerLabel;
 	
-	Display display;
+	private Display display;
 	
-	Menu menu;
+	private Menu menu;
+	
+	private Path path;
+	
+	private JButton sairButton;
 	
 	// Constructors -----------------------------------------------------------
 	
-	public Screen()
+	public Screen(String labels[], String commands[])
 	{
-		setLayout(new BorderLayout());
-		
 		headerLabel = new JLabel();
+		path = new Path();
+		menu = new Menu();
+		display = new Display();
+		sairButton = new JButton("Sair");
 		
+		for(int i = 0; i < labels.length; i++)
+		{
+			JButton button = new JButton(labels[i]);
+			button.setActionCommand(commands[i]);
+			menu.addMenu(button);
+		}
+		
+		menu.addMenu(sairButton);
+		
+		init();
+	}
+	
+	// Methods ----------------------------------------------------------------
+	
+	/**
+	 * 
+	 */
+	private void init()
+	{
 		JPanel mainPanel = new JPanel(),
 			   header = new JPanel();
 		
-		Path path = new Path();
-		menu = new Menu();
-		display = new Display();
+		setLayout(new BorderLayout());
 		
-		path.addPath("Aluno");
-		path.addPath("Notas");
+		display.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(path, BorderLayout.NORTH);
@@ -60,7 +86,25 @@ public class Screen extends JPanel {
 		add(mainPanel, BorderLayout.CENTER);
 	}
 	
-	// Methods ----------------------------------------------------------------
+	/**
+	 * 
+	 */
+	public void addPath(String text)
+	{
+		path.addPath(text);
+	}
+	
+	/**
+	 * 
+	 */
+	public void setDisplay(JPanel panel)
+	{
+		display.removeAll();
+		display.add(panel);
+		validate();
+	}
+	
+	// Setters and Getters ----------------------------------------------------
 	
 	/**
 	 * 
@@ -73,9 +117,18 @@ public class Screen extends JPanel {
 	/**
 	 * 
 	 */
-	public void addMenu(String text, ActionListener listener)
+	public void setSairHandler(ActionListener handler)
 	{
-		menu.addMenu(text, listener);
+		sairButton.addActionListener(handler);
+	}
+	
+	/**
+	 * 
+	 */
+	public void setHandler(ActionListener handler)
+	{
+		for(JButton button : menu.getButtons())
+			button.addActionListener(handler);
 	}
 	
 }

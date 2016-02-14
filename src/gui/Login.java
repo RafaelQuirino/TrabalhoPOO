@@ -130,8 +130,8 @@ public class Login extends JPanel {
 			userField = new JTextField();
 			passwordField = new JPasswordField();
 			
+			// Sair action
 			passwordField.addActionListener(new ActionListener(){
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					button.doClick();
 				}

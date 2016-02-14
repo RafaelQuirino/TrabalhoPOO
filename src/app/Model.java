@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public abstract class Model implements Serializable{
 	
+	// Constants --------------------------------------------------------------
+	
 	public static final String DEFAULT_PATH = 
 			System.getProperty("user.home") +
 			File.separator + 
@@ -18,6 +20,11 @@ public abstract class Model implements Serializable{
 	
 	public static final String DEFAULT_EXTENSION = ".data";
 	
+	// Methods ----------------------------------------------------------------
+	
+	/**
+	 * 
+	 */
 	protected static ArrayList getData(String model)
 	{
 		String path = DEFAULT_PATH + model + DEFAULT_EXTENSION;
@@ -25,6 +32,9 @@ public abstract class Model implements Serializable{
 		return readObject(path);
 	}
 	
+	/**
+	 * 
+	 */
 	public static ArrayList readObject(String path)
 	{
 		ArrayList objects = null;
@@ -41,6 +51,9 @@ public abstract class Model implements Serializable{
 		return objects;
 	}
 	
+	/**
+	 * 
+	 */
 	public static void appendObject(Object object, String path)
 	{
 		try
@@ -55,6 +68,9 @@ public abstract class Model implements Serializable{
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public static void writeObject(Object object, String path)
 	{
 		try

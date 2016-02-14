@@ -27,6 +27,18 @@ public class Path extends JPanel {
 		setBorder(BorderFactory.createEtchedBorder());
 	}
 	
+	/**
+	 * 
+	 */
+	public void reset()
+	{
+		paths = new ArrayList<String>();
+		removeAll();
+	}
+	
+	/**
+	 * 
+	 */
 	public void addPath(String text)
 	{
 		paths.add(text);
@@ -43,15 +55,6 @@ public class Path extends JPanel {
 			add(separator);
 		
 		add(label);
-	}
-	
-	private class InnerLabel extends JLabel
-	{
-		public InnerLabel(String text)
-		{
-			super(text);
-			
-		}
 	}
 	
 }
