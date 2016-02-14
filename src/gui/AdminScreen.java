@@ -13,11 +13,13 @@ public class AdminScreen extends Screen {
 	
 	private static final String adminLabels[] = {
 		"Professores",
+		"Turmas",
 		"Alunos"
 	};
 	
 	private static final String adminCommands[] = {
 		Application.ADMIN_PROFESSORES,
+		Application.ADMIN_TURMAS,
 		Application.ADMIN_ALUNOS
 	};
 	
@@ -26,8 +28,13 @@ public class AdminScreen extends Screen {
 	private JButton buttons[];
 	
 	private ProfessoresPanel professoresPanel;
-	
 	private CadastroProfessor cadastroProfessor;
+	
+	private TurmaPanel turmaPanel;
+	private CadastroTurma cadastroTurma;
+	
+	private AlunosPanel alunosPanel;
+	private CadastroAluno cadastroAluno;
 	
 	// Constructors -----------------------------------------------------------
 	
@@ -39,6 +46,12 @@ public class AdminScreen extends Screen {
 		
 		professoresPanel = new ProfessoresPanel();
 		cadastroProfessor = new CadastroProfessor();
+		
+		turmaPanel = new TurmaPanel();
+		cadastroTurma = new CadastroTurma();
+		
+		alunosPanel = new AlunosPanel();
+		cadastroAluno = new CadastroAluno();
 	}
 	
 	// Methods ----------------------------------------------------------------
@@ -46,10 +59,11 @@ public class AdminScreen extends Screen {
 	/**
 	 * 
 	 */
-	public void showProfessores()
+	public void showProfessores1()
 	{
 		setDisplay(professoresPanel);
 	}
+	
 	
 	/**
 	 * 
@@ -67,6 +81,10 @@ public class AdminScreen extends Screen {
 		super.setHandler(handler);
 		cadastroProfessor.setHandler(handler);
 		professoresPanel.setHandler(handler);
+		turmaPanel.setHandler(handler);
+		cadastroTurma.setHandler(handler);
+		alunosPanel.setHandler(handler);
+		cadastroAluno.setHandler(handler);
 	}
 	
 	// Setters and Getters ----------------------------------------------------
@@ -79,5 +97,25 @@ public class AdminScreen extends Screen {
 	public ProfessoresPanel getProfessoresPanel()
 	{
 		return professoresPanel;
+	}
+	
+	public TurmaPanel getTurmaPanel()
+	{
+		return turmaPanel;
+	}
+	
+	public CadastroTurma getCadastroTurma()
+	{
+		return cadastroTurma;
+	}
+	
+	public AlunosPanel getAlunosPanel()
+	{
+		return alunosPanel;
+	}
+	
+	public CadastroAluno getCadastroAluno()
+	{
+		return cadastroAluno;
 	}
 }

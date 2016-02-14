@@ -1,40 +1,26 @@
 package model;
 
-public class Aluno {
+public class Aluno extends Pessoa {
 	
-	private String Name, Matricula, Endereco;
-	private float Media;
+	private String matricula;
 	
-	void setName(String name){
-		this.Name = name;
+	private Turma turma;
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 	
-	String getName(){
-		return this.Name;
-	}
-	
-	void setMatricula(String matricula){
-		this.Matricula = matricula;
-	}
-	
-	String getMatricula(){
-		return this.Matricula;
-	}
-	
-	void setEndereco(String end){
-		this.Endereco = end;
-	}
-	
-	String getEndereco(){
-		return this.Endereco;
-	}
-	
-	void setMedia(float media){
-		this.Media = media;
-	}
-	
-	float getMedia(){
-		return this.Media;
-	}
 	
 }
