@@ -16,7 +16,7 @@ public class Frame extends JFrame {
 	private static final int WIDTH = 700;
 	private static final int HEIGHT = 600;
 	
-	private static final boolean MAXIMIZED = true;
+	private static final boolean MAXIMIZED = false;
 	
 	// Instance fields --------------------------------------------------------
 	
@@ -25,6 +25,8 @@ public class Frame extends JFrame {
 	private Screen screen;
 	
 	private ActionListener adminHandler;
+	
+	private ActionListener professorHandler;
 	
 	// Constructors -----------------------------------------------------------
 	
@@ -61,10 +63,12 @@ public class Frame extends JFrame {
 				break;
 			
 			case Usuario.PROFESSOR:
-				//screen = new ProfessorScreen();
-				//screen.setHandler(professorHandler);
+				screen = new ProfessorScreen();
+				screen.setHandler(professorHandler);
 		}
+		
 		screen.setHeaderText(usuario.getTipo() + ": " + usuario.getPessoa().getNome());
+		
 		screen.setSairHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				setContentPane(login);
@@ -108,5 +112,13 @@ public class Frame extends JFrame {
 	public void setAdminHandler(ActionListener adminHandler)
 	{
 		this.adminHandler = adminHandler;
+	}
+	
+	/**
+	 * 
+	 */
+	public void setProfessorHandler(ActionListener handler)
+	{
+		this.professorHandler = handler;
 	}
 }

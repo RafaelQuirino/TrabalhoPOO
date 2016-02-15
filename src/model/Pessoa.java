@@ -2,10 +2,15 @@ package model;
 
 import app.Model;
 
-public class Pessoa extends Model{
+public class Pessoa extends Model {
 
 	// Instance fields --------------------------------------------------------
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4197806718936388663L;
+
 	private String nome;
 	
 	private String email;

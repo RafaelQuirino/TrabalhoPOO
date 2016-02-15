@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import gui.AdicionarTurmaPanel;
 import gui.AdminScreen;
 import gui.CadastroAluno;
 import gui.Frame;
@@ -32,14 +33,8 @@ public class AdminHandler implements ActionListener {
 	{
 		switch(e.getActionCommand())
 		{
-			//case Application.ADMIN_CADASTRAR_PROFESSOR_COMMAND:
-			//	cadastrarProfessor();
-			//	break;
-			
-			case Application.ADMIN_CADASTRAR_ALUNO_COMMAND:
-				cadastrarAluno();
-				break;
-			
+			// Professor commands
+				
 			case Application.ADMIN_PROFESSORES:
 				showAdminProfessores();
 				break;
@@ -52,6 +47,16 @@ public class AdminHandler implements ActionListener {
 				criarProfessor();
 				break;
 				
+			case Application.ADMIN_ADICIONAR_TURMA_COMMAND:
+				adicionarTurma();
+				break;
+				
+			case Application.ADMIN_DO_ADICIONAR_TURMA_COMMAND:
+				doAdicionarTurma();
+				break;
+				
+			// Turma commands
+				
 			case Application.ADMIN_TURMAS:
 				showAdminTurmas();
 				break;
@@ -63,6 +68,8 @@ public class AdminHandler implements ActionListener {
 			case Application.ADMIN_CRIAR_TURMA_COMMAND:
 				criarTurma();
 				break;
+				
+			// Aluno commands
 				
 			case Application.ADMIN_ALUNOS:
 				showAlunos();
@@ -141,6 +148,44 @@ public class AdminHandler implements ActionListener {
 	/**
 	 * 
 	 */
+	private void adicionarTurma()
+	{
+		AdminScreen screen = getScreen();
+		AdicionarTurmaPanel panel = screen.getAdicionarTurmaPanel();
+		
+		screen.setDisplay(panel);
+		panel.reset();
+		
+		for(Professor p : (ArrayList<Professor>) Model.getData(Professor.class))
+			panel.addProfessor(p);
+		
+		for(Turma t : (ArrayList<Turma>) Model.getData(Turma.class))
+			panel.addTurma(t);
+	}
+	
+	/**
+	 * 
+	 */
+	
+	private void doAdicionarTurma()
+	{
+		AdminScreen screen = getScreen();
+		AdicionarTurmaPanel panel = screen.getAdicionarTurmaPanel();
+		
+		Professor professor = (Professor)panel.getProfessoresCombo().getSelectedItem();
+		Turma turma = (Turma)panel.getTurmasCombo().getSelectedItem();
+		
+		professor.addTurma(turma);
+		turma.addProfessor(professor);
+		
+		Model.updateModel(professor);
+		Model.updateModel(turma);
+		showAdminProfessores();
+	}
+	
+	/**
+	 * 
+	 */
 	private void showAdminProfessores()
 	{
 		ArrayList<Professor> professores = Model.getData(Professor.class);
@@ -151,9 +196,20 @@ public class AdminHandler implements ActionListener {
 		screen.getProfessoresPanel().reset();
 		for(Professor p : professores)
 		{
+			ArrayList<Turma> turmas = p.getTurmas();
+			
+			String turmasString = "";
+			
+			for(int i = 0; i < turmas.size(); i++){
+				turmasString += turmas.get(i);
+				if(i < turmas.size() - 1)
+					turmasString += ", ";
+			}
+			
 			String data[] = {
 					p.getNome(),
-					p.getDisciplina()
+					p.getDisciplina(),
+					turmasString
 			};
 			screen.getProfessoresPanel().addRow(data);
 		}
@@ -205,14 +261,6 @@ public class AdminHandler implements ActionListener {
 		AdminScreen screen = (AdminScreen) frame.getScreen();
 		
 		screen.showCadastroProfessor();
-	}
-	
-	/**
-	 * 
-	 */
-	private void cadastrarAluno()
-	{
-		
 	}
 	
 	/**

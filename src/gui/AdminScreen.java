@@ -29,6 +29,7 @@ public class AdminScreen extends Screen {
 	
 	private ProfessoresPanel professoresPanel;
 	private CadastroProfessor cadastroProfessor;
+	private AdicionarTurmaPanel adicionarTurmaPanel;
 	
 	private TurmaPanel turmaPanel;
 	private CadastroTurma cadastroTurma;
@@ -46,6 +47,7 @@ public class AdminScreen extends Screen {
 		
 		professoresPanel = new ProfessoresPanel();
 		cadastroProfessor = new CadastroProfessor();
+		adicionarTurmaPanel = new AdicionarTurmaPanel();
 		
 		turmaPanel = new TurmaPanel();
 		cadastroTurma = new CadastroTurma();
@@ -85,6 +87,7 @@ public class AdminScreen extends Screen {
 		cadastroTurma.setHandler(handler);
 		alunosPanel.setHandler(handler);
 		cadastroAluno.setHandler(handler);
+		adicionarTurmaPanel.setHandler(handler);
 	}
 	
 	// Setters and Getters ----------------------------------------------------
@@ -117,5 +120,10 @@ public class AdminScreen extends Screen {
 	public CadastroAluno getCadastroAluno()
 	{
 		return cadastroAluno;
+	}
+	
+	public AdicionarTurmaPanel getAdicionarTurmaPanel()
+	{
+		return adicionarTurmaPanel;
 	}
 }

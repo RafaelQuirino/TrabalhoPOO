@@ -8,6 +8,11 @@ public class Usuario extends Model{
 
 	// Constants --------------------------------------------------------------
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2770940305382218676L;
+
 	public static final String PROFESSOR = "Professor";
 	
 	public static final String ALUNO = "Aluno";
@@ -40,7 +45,7 @@ public class Usuario extends Model{
 	public static boolean autenticar(String usuario, String senha)
 	{
 		ArrayList<Usuario> usuarios = Model.getData(Usuario.class);
-		System.out.println(usuarios.get(0));
+		
 		for(int i = 0; i < usuarios.size(); i++)
 		{
 			Usuario u = (Usuario) usuarios.get(i);

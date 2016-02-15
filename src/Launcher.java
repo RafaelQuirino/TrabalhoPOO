@@ -1,63 +1,82 @@
 import java.io.File;
-import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
+import javax.swing.SwingUtilities;
 
 import app.Application;
 import app.Model;
-import model.Pessoa;
-import model.Usuario;
+import model.Turma;
 
 public class Launcher {
 
-	public static void main(String args[])
+	public static void main(String args[]) throws Exception
 	{
-		String models[] = {
-			"aluno",
-			"avaliacao",
-			"pessoa",
-			"professor",
-			"turma",
-			"usuario"
-		};
+		ArrayList<String> models = new ArrayList<String>();
+
+		final String path = "model";
+
+		final File jarFile = new File(
+			URLDecoder.decode(
+				new Model().getClass().getProtectionDomain()
+				.getCodeSource().getLocation().getPath(), "UTF-8"
+			)
+		);
 		
-		for(int i = 0; i < models.length; i++)
+		if (jarFile.isFile())
 		{
-			String path = Model.DEFAULT_PATH + models[i] + Model.DEFAULT_EXTENSION;
+			final JarFile jar = new JarFile(jarFile);
+			final Enumeration<JarEntry> entries = jar.entries();
+
+			while (entries.hasMoreElements())
+			{
+				final String name = entries.nextElement().getName();
+				
+				if( name.startsWith(path + "/") &&
+				   !name.endsWith("/"))
+				{
+					models.add(name);
+				}
+			}
+			jar.close();
+		}
+		else
+		{
+			final URL url = Launcher.class.getResource("/" + path);
 			
-			File file = new File(path);
-			
-			if(!file.exists() && !file.isDirectory())
+			if(url != null)
 			{
 				try
 				{
-					file.getParentFile().mkdirs();
-					file.createNewFile();
+					final File apps = new File(url.toURI());
 					
-					ArrayList arrayList = new ArrayList();
-					
-					if(models[i].equals("usuario"))
+					for (File app : apps.listFiles())
 					{
-						Usuario usuario = new Usuario();
-						usuario.setLogin("admin");
-						usuario.setSenha("admin");
-						usuario.setTipo(Usuario.ADMINISTRADOR);
-						Pessoa p = new Pessoa();
-						p.setNome("Administrador");
-						usuario.setPessoa(p);
-						arrayList.add(usuario);
+						models.add(app.getName());
 					}
-					
-					Model.writeObject(arrayList, path);
 				}
-				catch (IOException e)
+				catch (URISyntaxException ex)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ex.printStackTrace();
 				}
 			}
 		}
 		
-		new Application();
+		for(String s : models)
+			Model.initModel(Class.forName("model." + s.replace(".class", "")));
+		
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run()
+			{
+				new Application();
+			}
+		});
+		
 	}
 	
 }

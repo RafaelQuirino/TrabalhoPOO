@@ -3,18 +3,19 @@ package app;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Model implements Serializable{
+import model.Pessoa;
+import model.Usuario;
+
+public class Model implements Serializable {
 	
 	// Constants --------------------------------------------------------------
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6743215224482974701L;
 
 	public static final String DEFAULT_PATH = 
@@ -25,12 +26,79 @@ public abstract class Model implements Serializable{
 	
 	public static final String DEFAULT_EXTENSION = ".data";
 	
-	// Methods ----------------------------------------------------------------
+	public static final String DEFAULT_USER_LOGIN = "admin";
+	
+	public static final String DEFAULT_USER_PASSWORD = "admin";
+	
+	// Instance Fields --------------------------------------------------------
+	
+	private int id;
+	
+	// Constructors -----------------------------------------------------------
+	
+	public Model()
+	{
+		
+	}
+	
+	// Setters and Getters ---------------------------------------------------
+	
+	public int getId()
+	{
+		return id;
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	
+	// Public static methods ---------------------------------------------------------
 	
 	/**
 	 * 
 	 */
-	protected static ArrayList getData(Class model)
+	public static void initModel(Class model)
+	{
+		File file = new File(getPath(model));
+		
+		if(!file.exists())// && !file.isDirectory())
+		{
+			ApplicationLogger.log("Creating file " + file.getAbsolutePath() + "...");
+			
+			try
+			{
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+				
+				ArrayList arrayList = new ArrayList();
+				
+				if(model.getName().equals("model.Usuario"))
+				{
+					Usuario usuario = new Usuario();
+					usuario.setLogin(DEFAULT_USER_LOGIN);
+					usuario.setSenha(DEFAULT_USER_PASSWORD);
+					usuario.setTipo(Usuario.ADMINISTRADOR);
+					usuario.setId(1);
+					Pessoa p = new Pessoa();
+					p.setNome("Administrador");
+					usuario.setPessoa(p);
+					arrayList.add(usuario);
+				}
+				
+				Model.writeObject(arrayList, file.getAbsolutePath());
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public static ArrayList getData(Class model)
 	{
 		return readObject(getPath(model));
 	}
@@ -38,10 +106,49 @@ public abstract class Model implements Serializable{
 	/**
 	 * 
 	 */
+	public static Model getData(Class model, int id)
+	{
+		ArrayList objects = readObject(getPath(model));
+		
+		ArrayList filteredObjects = new ArrayList();
+		
+		for(Object o : objects)
+			if(((Model)o).getId() == id)
+				return (Model)o;
+		
+		return null;
+	}
+	
+	/**
+	 * 
+	 */
 	public static void createModel(Model model)
 	{
-		appendObject(model, getPath(model));
+		appendModel(model, getPath(model));
 	}
+	
+	/**
+	 * 
+	 */
+	public static void updateModel(Model model)
+	{
+		ArrayList<Model> objects = Model.getData(model.getClass());
+		
+		for(int i = 0; i < objects.size(); i++)
+		{
+			Model m = objects.get(i);
+			
+			if(m.getId() == model.getId())
+			{
+				objects.remove(i);
+				objects.add(i, model);
+			}
+		}
+		
+		writeObject(objects, getPath(model));
+	}
+	
+	// Private static methods -------------------------------------------------
 	
 	/**
 	 * 
@@ -64,9 +171,9 @@ public abstract class Model implements Serializable{
 	/**
 	 * 
 	 */
-	public static ArrayList readObject(String path)
+	private static ArrayList readObject(String path)
 	{
-		ArrayList objects = null;
+		ArrayList<Model> objects = null;
 		try
 		{
 			FileInputStream fin = new FileInputStream(path);
@@ -77,23 +184,27 @@ public abstract class Model implements Serializable{
 		catch(Exception ex){
 			ex.printStackTrace();
 		}
+		
 		return objects;
 	}
 	
 	/**
 	 * 
 	 */
-	public static void appendObject(Object object, String path)
+	private static void appendModel(Model model, String path)
 	{
 		try
 		{
-			ArrayList objects = readObject(path);
-			System.out.println("apend begin");
-			System.out.println(objects.size());
-			System.out.println(objects);
-			System.out.println("apend end");
-			objects.add(object);
-			writeObject(objects, path);
+			ArrayList models = (ArrayList) readObject(path);
+			int lastId = 0;
+			
+			for(Model m : (ArrayList<Model>)models)
+				if(m.getId() > lastId)
+					lastId = m.getId();
+			
+			model.setId(lastId + 1);
+			models.add(model);
+			writeObject(models, path);
 			
 		}
 		catch(Exception ex){
@@ -104,7 +215,7 @@ public abstract class Model implements Serializable{
 	/**
 	 * 
 	 */
-	public static void writeObject(Object object, String path)
+	private static void writeObject(Object object, String path)
 	{
 		try
 		{
