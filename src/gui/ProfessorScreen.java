@@ -48,21 +48,34 @@ public class ProfessorScreen extends Screen {
 		cadastroAvaliacaoPanel = new CadastroPanel(
 			"Criar Avaliação", Application.PROFESSOR_CRIAR_AVALIACAO
 		);
-		cadastroAvaliacaoPanel.addRow("Turma", new JComboBox<Turma>());
-		cadastroAvaliacaoPanel.addRow("Data", new JTextField());
+		
+		cadastroAvaliacaoPanel.addRow("Turma", new JComboBox<Turma>(), 0);
+		cadastroAvaliacaoPanel.addRow("Data", new JTextField(), 0);
 	}
 	
-	// Methods ----------------------------------------------------------------
+	// Instance Methods -------------------------------------------------------
 	
 	public void setHandler(ActionListener handler)
 	{
 		super.setHandler(handler);
 		avaliacoesPanel.setHandler(handler);
 		cadastroAvaliacaoPanel.setHandler(handler);
-		JComboBox combo = (JComboBox)cadastroAvaliacaoPanel.getRow("Turma");
+		JComboBox combo = (JComboBox)cadastroAvaliacaoPanel.getComponent("Turma");
 		combo.addActionListener(handler);
 		combo.setActionCommand(Application.PROFESSOR_NOVA_AVALIACAO_CHANGE_COMBO);
 	}
+	
+	/**
+	 * 
+	 */
+	public void resetCadastroAvaliacaoFields()
+	{
+		for(String key : cadastroAvaliacaoPanel.getKeys())
+			if(!key.equals("Turma") && !key.equals("Data"))
+				cadastroAvaliacaoPanel.removeRow(key);
+	}
+	
+	// Setters and Getters ----------------------------------------------------
 
 	public ListagemPanel getAvaliacoesPanel() {
 		return avaliacoesPanel;

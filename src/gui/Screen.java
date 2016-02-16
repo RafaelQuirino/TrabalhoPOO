@@ -5,13 +5,14 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import app.AdminHandler;
-import model.Usuario;
+import javax.swing.JScrollPane;
 
 public abstract class Screen extends JPanel {
 
@@ -74,7 +75,7 @@ public abstract class Screen extends JPanel {
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(path, BorderLayout.NORTH);
 		mainPanel.add(menu, BorderLayout.WEST);
-		mainPanel.add(display, BorderLayout.CENTER);
+		mainPanel.add(new JScrollPane(display), BorderLayout.CENTER);
 		
 		headerLabel.setFont(new Font("Serif", Font.PLAIN, 40));
 		headerLabel.setForeground(HEADER_FOREGROUND_COLOR);
@@ -99,12 +100,10 @@ public abstract class Screen extends JPanel {
 	/**
 	 * 
 	 */
-	public void setDisplay(JPanel panel)
+	public void setDisplay(JComponent panel)
 	{
-		display.removeAll();
-		display.add(panel);
-		validate();
-		repaint();
+		//display.removeAll();
+		display.setContentPane(panel);
 	}
 	
 	// Setters and Getters ----------------------------------------------------

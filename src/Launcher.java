@@ -11,7 +11,8 @@ import javax.swing.SwingUtilities;
 
 import app.Application;
 import app.Model;
-import model.Turma;
+import model.Pessoa;
+import model.Usuario;
 
 public class Launcher {
 

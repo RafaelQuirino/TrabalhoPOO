@@ -1,5 +1,7 @@
 package model;
 
+import app.Model;
+
 public class Aluno extends Pessoa {
 	
 	/**
@@ -7,10 +9,14 @@ public class Aluno extends Pessoa {
 	 */
 	private static final long serialVersionUID = -728954966906293875L;
 
+	// Instance fields --------------------------------------------------------
+	
 	private String matricula;
 	
-	private Turma turma;
+	private int turmaId;
 
+	// Setters and Getters ----------------------------------------------------
+	
 	public String getMatricula() {
 		return matricula;
 	}
@@ -20,11 +26,15 @@ public class Aluno extends Pessoa {
 	}
 
 	public Turma getTurma() {
-		return turma;
+		return (Turma) Model.find(Turma.class, turmaId);
 	}
 
-	public void setTurma(Turma turma) {
-		this.turma = turma;
+	public int getTurmaId(){
+		return turmaId;
+	}
+	
+	public void setTurmaId(int id) {
+		turmaId = id;
 	}
 	
 	

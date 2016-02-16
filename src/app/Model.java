@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import model.Pessoa;
+import model.Turma;
 import model.Usuario;
 
 public class Model implements Serializable {
@@ -75,18 +76,24 @@ public class Model implements Serializable {
 				
 				if(model.getName().equals("model.Usuario"))
 				{
+					Pessoa p = new Pessoa();
+					p.setNome("Administrador");
+					initModel(Pessoa.class);
+					p.setId(Model.createModel(p));
+					
 					Usuario usuario = new Usuario();
 					usuario.setLogin(DEFAULT_USER_LOGIN);
 					usuario.setSenha(DEFAULT_USER_PASSWORD);
 					usuario.setTipo(Usuario.ADMINISTRADOR);
-					usuario.setId(1);
-					Pessoa p = new Pessoa();
-					p.setNome("Administrador");
-					usuario.setPessoa(p);
+					//usuario.setId(1);
+					usuario.setPessoaId(p.getId());
 					arrayList.add(usuario);
+					
+					
 				}
 				
 				Model.writeObject(arrayList, file.getAbsolutePath());
+				
 			}
 			catch (IOException e)
 			{
@@ -98,7 +105,7 @@ public class Model implements Serializable {
 	/**
 	 * 
 	 */
-	public static ArrayList getData(Class model)
+	public static ArrayList all(Class model)
 	{
 		return readObject(getPath(model));
 	}
@@ -106,7 +113,7 @@ public class Model implements Serializable {
 	/**
 	 * 
 	 */
-	public static Model getData(Class model, int id)
+	public static Model find(Class model, int id)
 	{
 		ArrayList objects = readObject(getPath(model));
 		
@@ -122,9 +129,23 @@ public class Model implements Serializable {
 	/**
 	 * 
 	 */
-	public static void createModel(Model model)
+	public static ArrayList findAll(Class model, ArrayList<Integer> ids)
 	{
-		appendModel(model, getPath(model));
+		ArrayList models = new ArrayList<Model>();
+		
+		for(Model m : (ArrayList<Model>)Model.all(model))
+			if(ids.contains(m.getId()))
+				models.add(m);
+		
+		return models;
+	}
+	
+	/**
+	 * 
+	 */
+	public static int createModel(Model model)
+	{
+		return appendModel(model, getPath(model));
 	}
 	
 	/**
@@ -132,7 +153,7 @@ public class Model implements Serializable {
 	 */
 	public static void updateModel(Model model)
 	{
-		ArrayList<Model> objects = Model.getData(model.getClass());
+		ArrayList<Model> objects = Model.all(model.getClass());
 		
 		for(int i = 0; i < objects.size(); i++)
 		{
@@ -191,7 +212,7 @@ public class Model implements Serializable {
 	/**
 	 * 
 	 */
-	private static void appendModel(Model model, String path)
+	private static int appendModel(Model model, String path)
 	{
 		try
 		{
@@ -205,11 +226,12 @@ public class Model implements Serializable {
 			model.setId(lastId + 1);
 			models.add(model);
 			writeObject(models, path);
-			
+			return model.getId();
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
 		}
+		return 0;
 	}
 	
 	/**

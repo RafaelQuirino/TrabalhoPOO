@@ -31,7 +31,7 @@ public class Usuario extends Model{
 	
 	private String tipo;
 	
-	private Pessoa pessoa;
+	private int pessoaId;
 	
 	// Constructors -----------------------------------------------------------
 	
@@ -44,7 +44,7 @@ public class Usuario extends Model{
 	
 	public static boolean autenticar(String usuario, String senha)
 	{
-		ArrayList<Usuario> usuarios = Model.getData(Usuario.class);
+		ArrayList<Usuario> usuarios = Model.all(Usuario.class);
 		
 		for(int i = 0; i < usuarios.size(); i++)
 		{
@@ -65,12 +65,16 @@ public class Usuario extends Model{
 	
 	// Instance methods -------------------------------------------------------
 	
-	public void setPessoa(Pessoa pessoa){
-		this.pessoa = pessoa;
+	public void setPessoaId(int id){
+		pessoaId = id;
+	}
+	
+	public int getPessoaId(){
+		return pessoaId;
 	}
 	
 	public Pessoa getPessoa(){
-		return pessoa;
+		return (Pessoa)Model.find(Pessoa.class, pessoaId);
 	}
 	
 	public void setTipo(String tipo){

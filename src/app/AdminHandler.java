@@ -4,9 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import gui.AdicionarTurmaPanel;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+
 import gui.AdminScreen;
-import gui.CadastroAluno;
+import gui.CadastroPanel;
 import gui.Frame;
 import model.Aluno;
 import model.Professor;
@@ -36,7 +38,7 @@ public class AdminHandler implements ActionListener {
 			// Professor commands
 				
 			case Application.ADMIN_PROFESSORES:
-				showAdminProfessores();
+				listagemProfessores();
 				break;
 			
 			case Application.ADMIN_NOVO_PROFESSOR_COMMAND:
@@ -58,7 +60,7 @@ public class AdminHandler implements ActionListener {
 			// Turma commands
 				
 			case Application.ADMIN_TURMAS:
-				showAdminTurmas();
+				listagemTurmas();
 				break;
 				
 			case Application.ADMIN_NOVA_TURMA_COMMAND:
@@ -72,7 +74,7 @@ public class AdminHandler implements ActionListener {
 			// Aluno commands
 				
 			case Application.ADMIN_ALUNOS:
-				showAlunos();
+				listagemAlunos();
 				break;
 				
 			case Application.ADMIN_NOVO_ALUNO_COMMAND:
@@ -88,107 +90,21 @@ public class AdminHandler implements ActionListener {
 	/**
 	 * 
 	 */
-	private void showAlunos()
+	private AdminScreen getScreen()
 	{
-		ArrayList<Aluno> alunos = Model.getData(Aluno.class);
-		
-		AdminScreen screen = getScreen();
-		screen.setDisplay(screen.getAlunosPanel());
-		screen.getAlunosPanel().reset();
-		
-		for(Aluno a : alunos)
-		{
-			String data[] = {
-					a.getNome(),
-					a.getMatricula(),
-					a.getTurma().getNome()
-			};
-			screen.getAlunosPanel().addRow(data);
-		}
+		return (AdminScreen) frame.getScreen();
 	}
 	
-	/**
-	 * 
-	 */
-	private void novoAluno()
-	{
-		AdminScreen screen = getScreen();
-		CadastroAluno cadastroAluno = screen.getCadastroAluno();
-		cadastroAluno.resetTurma();
-		
-		for(Turma t : (ArrayList<Turma>)Model.getData(Turma.class))
-			cadastroAluno.addTurma(t);
-		
-		getScreen().setDisplay(getScreen().getCadastroAluno());
-	}
+	/////////////////
+	// Professores //==========================================================
+	/////////////////
 	
 	/**
-	 * 
+	 * Listagem professores
 	 */
-	private void criarAluno()
+	private void listagemProfessores()
 	{
-		AdminScreen screen = getScreen();
-		CadastroAluno cadastroAluno = screen.getCadastroAluno();
-		
-		Aluno aluno = new Aluno();
-		aluno.setMatricula(cadastroAluno.getMatricula());
-		aluno.setNome(cadastroAluno.getNome());
-		aluno.setTurma(cadastroAluno.getSelectedTurma());
-		
-		Usuario usuario = new Usuario();
-		usuario.setLogin(cadastroAluno.getLogin());
-		usuario.setSenha(cadastroAluno.getSenha());
-		usuario.setPessoa(aluno);
-		usuario.setTipo(Usuario.ALUNO);
-		Model.createModel(aluno);
-		Model.createModel(usuario);
-		showAlunos();
-	}
-	
-	/**
-	 * 
-	 */
-	private void adicionarTurma()
-	{
-		AdminScreen screen = getScreen();
-		AdicionarTurmaPanel panel = screen.getAdicionarTurmaPanel();
-		
-		screen.setDisplay(panel);
-		panel.reset();
-		
-		for(Professor p : (ArrayList<Professor>) Model.getData(Professor.class))
-			panel.addProfessor(p);
-		
-		for(Turma t : (ArrayList<Turma>) Model.getData(Turma.class))
-			panel.addTurma(t);
-	}
-	
-	/**
-	 * 
-	 */
-	
-	private void doAdicionarTurma()
-	{
-		AdminScreen screen = getScreen();
-		AdicionarTurmaPanel panel = screen.getAdicionarTurmaPanel();
-		
-		Professor professor = (Professor)panel.getProfessoresCombo().getSelectedItem();
-		Turma turma = (Turma)panel.getTurmasCombo().getSelectedItem();
-		
-		professor.addTurma(turma);
-		turma.addProfessor(professor);
-		
-		Model.updateModel(professor);
-		Model.updateModel(turma);
-		showAdminProfessores();
-	}
-	
-	/**
-	 * 
-	 */
-	private void showAdminProfessores()
-	{
-		ArrayList<Professor> professores = Model.getData(Professor.class);
+		ArrayList<Professor> professores = Model.all(Professor.class);
 		
 		AdminScreen screen = (AdminScreen) frame.getScreen();
 		//screen.showProfessores();
@@ -216,11 +132,94 @@ public class AdminHandler implements ActionListener {
 	}
 	
 	/**
-	 * 
+	 * Novo professor
 	 */
-	private void showAdminTurmas()
+	private void novoProfessor()
 	{
-		ArrayList<Turma> turmas = Model.getData(Turma.class);
+		getScreen().showCadastroProfessor();
+	}
+	
+	/**
+	 * Criar professor
+	 */
+	private void criarProfessor()
+	{
+		AdminScreen screen = (AdminScreen) frame.getScreen();
+		Professor professor = new Professor();
+		CadastroPanel cadastro = screen.getCadastroProfessor();
+		
+		professor.setNome(((JTextField)cadastro.getComponent("Nome")).getText());
+		professor.setRegistro(((JTextField)cadastro.getComponent("Registro")).getText());
+		professor.setDisciplina(((JTextField)cadastro.getComponent("Disciplina")).getText());
+		
+		int professorId = Model.createModel(professor);
+		
+		Usuario usuario = new Usuario();
+		
+		usuario.setLogin(((JTextField)cadastro.getComponent("Login")).getText());
+		usuario.setSenha(((JTextField)cadastro.getComponent("Senha")).getText());
+		usuario.setPessoaId(professorId);
+		usuario.setTipo(Usuario.PROFESSOR);
+		
+		Model.createModel(usuario);
+		listagemProfessores();
+	}
+	
+	/**
+	 * Adicionar turma
+	 */
+	private void adicionarTurma()
+	{
+		AdminScreen screen = getScreen();
+		CadastroPanel cadastro = screen.getAdicionarTurmaPanel();
+		
+		screen.setDisplay(cadastro);
+		//cadastro.reset();
+		
+		JComboBox<Professor> professoresCombo = (JComboBox)cadastro.getComponent("Professor");
+		JComboBox<Turma> turmasCombo = (JComboBox)cadastro.getComponent("Turma");
+		
+		professoresCombo.removeAllItems();
+		turmasCombo.removeAllItems();
+		
+		for(Professor p : (ArrayList<Professor>) Model.all(Professor.class))
+			professoresCombo.addItem(p);
+		
+		for(Turma t : (ArrayList<Turma>) Model.all(Turma.class))
+			turmasCombo.addItem(t);
+	}
+	
+	/**
+	 * Do adicionar turma
+	 */
+	private void doAdicionarTurma()
+	{
+		AdminScreen screen = getScreen();
+		CadastroPanel cadastro = screen.getAdicionarTurmaPanel();
+		Professor professor = (Professor)
+			((JComboBox)cadastro.getComponent("Professor")).getSelectedItem();
+		
+		Turma turma = (Turma)
+			((JComboBox)cadastro.getComponent("Turma")).getSelectedItem();
+		
+		professor.addTurmaId(turma.getId());
+		turma.addProfessorId(professor.getId());
+		
+		Model.updateModel(professor);
+		Model.updateModel(turma);
+		listagemProfessores();
+	}
+	
+	////////////
+	// Turmas //===============================================================
+	////////////
+	
+	/**
+	 * Listagem turmas
+	 */
+	private void listagemTurmas()
+	{
+		ArrayList<Turma> turmas = Model.all(Turma.class);
 		getScreen().setDisplay(getScreen().getTurmaPanel());
 		getScreen().getTurmaPanel().reset();
 		for(Turma t : turmas)
@@ -234,7 +233,7 @@ public class AdminHandler implements ActionListener {
 	}
 	
 	/**
-	 * 
+	 * Nova turma
 	 */
 	private void novaTurma()
 	{
@@ -242,51 +241,88 @@ public class AdminHandler implements ActionListener {
 	}
 	
 	/**
-	 * 
+	 * Criar turma
 	 */
 	private void criarTurma()
 	{
-		
 		Turma turma = new Turma();
-		turma.setNome(getScreen().getCadastroTurma().getNome());
+		turma.setNome(((JTextField)getScreen().getCadastroTurma().getComponent("Nome")).getText());
 		Model.createModel(turma);
-		showAdminTurmas();
+		listagemTurmas();
+	}
+	
+	////////////
+	// Alunos //===============================================================
+	////////////
+	
+	/**
+	 * Listagem alunos
+	 */
+	private void listagemAlunos()
+	{
+		ArrayList<Aluno> alunos = Model.all(Aluno.class);
+		
+		AdminScreen screen = getScreen();
+		screen.setDisplay(screen.getAlunosPanel());
+		screen.getAlunosPanel().reset();
+		
+		for(Aluno a : alunos)
+		{
+			String data[] = {
+					a.getNome(),
+					a.getMatricula(),
+					a.getTurma().getNome()
+			};
+			screen.getAlunosPanel().addRow(data);
+		}
 	}
 	
 	/**
-	 * 
+	 * Novo aluno
 	 */
-	private void novoProfessor()
+	private void novoAluno()
 	{
-		AdminScreen screen = (AdminScreen) frame.getScreen();
+		AdminScreen screen = getScreen();
+		CadastroPanel cadastro = screen.getCadastroAluno();
+		//cadastroAluno.resetTurma();
+		JComboBox<Turma> turmaCombo = (JComboBox)cadastro.getComponent("Turma");
+		turmaCombo.removeAllItems();
 		
-		screen.showCadastroProfessor();
+		for(Turma t : (ArrayList<Turma>)Model.all(Turma.class))
+			turmaCombo.addItem(t);
+		
+		getScreen().setDisplay(getScreen().getCadastroAluno());
 	}
 	
 	/**
-	 * 
+	 * Criar aluno
 	 */
-	private void criarProfessor()
+	private void criarAluno()
 	{
-		AdminScreen screen = (AdminScreen) frame.getScreen();
+		AdminScreen screen = getScreen();
+		CadastroPanel cadastro = screen.getCadastroAluno();
 		
-		Professor professor = new Professor();
-		professor.setNome(screen.getCadastroProfessor().getNome());
-		professor.setRegistro(screen.getCadastroProfessor().getRegistro());
-		professor.setDisciplina(screen.getCadastroProfessor().getDisciplina());
+		String nome = ((JTextField)cadastro.getComponent("Nome")).getText();
+		String matricula = ((JTextField)cadastro.getComponent("Matrícula")).getText();
+		String login = ((JTextField)cadastro.getComponent("Login")).getText();
+		String senha = ((JTextField)cadastro.getComponent("Senha")).getText();
+		
+		int turmaId = ((Turma)((JComboBox)
+			cadastro.getComponent("Turma")).getSelectedItem()).getId();
+		
+		Aluno aluno = new Aluno();
+		aluno.setMatricula(matricula);
+		aluno.setNome(nome);
+		aluno.setTurmaId(turmaId);
+		
 		Usuario usuario = new Usuario();
-		usuario.setLogin(screen.getCadastroProfessor().getLogin());
-		usuario.setSenha(screen.getCadastroProfessor().getSenha());
-		usuario.setPessoa(professor);
-		usuario.setTipo(Usuario.PROFESSOR);
-		Model.createModel(professor);
+		usuario.setLogin(login);
+		usuario.setSenha(senha);
+		usuario.setPessoaId(aluno.getId());
+		usuario.setTipo(Usuario.ALUNO);
+		Model.createModel(aluno);
 		Model.createModel(usuario);
-		showAdminProfessores();
-	}
-	
-	private AdminScreen getScreen()
-	{
-		return (AdminScreen) frame.getScreen();
+		listagemAlunos();
 	}
 	
 }

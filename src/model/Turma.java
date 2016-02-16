@@ -15,20 +15,47 @@ public class Turma extends Model {
 	
 	private String nome;
 	
-	private ArrayList<Professor> professores;
+	private ArrayList<Integer> professorIds;
 	
 	// Constructors -----------------------------------------------------------
 	
 	public Turma()
 	{
-		professores = new ArrayList<Professor>();
+		professorIds = new ArrayList<Integer>();
 	}
 	
 	// Instance methods -------------------------------------------------------
 
+	/**
+	 * 
+	 */
 	public String toString()
 	{
 		return nome;
+	}
+	
+	/**
+	 * 
+	 */
+	public ArrayList<Aluno> getAlunos()
+	{
+		ArrayList<Aluno> alunos = new ArrayList<Aluno>();
+		
+		ArrayList all = all(Aluno.class);
+		
+		for(Aluno a : (ArrayList<Aluno>)all)
+			if(a.getTurmaId() == getId())
+				alunos.add(a);
+		
+		return alunos;
+	}
+	
+	/**
+	 * 
+	 */
+	public ArrayList<Professor> getProfessores()
+	{
+		return (ArrayList<Professor>) Model.findAll(Professor.class, professorIds);
 	}
 	
 	// Setters and Getters ----------------------------------------------------
@@ -41,12 +68,12 @@ public class Turma extends Model {
 		this.nome = nome;
 	}
 
-	public ArrayList<Professor> getProfessores() {
-		return professores;
+	public ArrayList<Integer> getProfessorIds() {
+		return professorIds;
 	}
 
-	public void addProfessor(Professor professor) {
-		professores.add(professor);
+	public void addProfessorId(int id) {
+		professorIds.add(id);
 	}
 	
 }

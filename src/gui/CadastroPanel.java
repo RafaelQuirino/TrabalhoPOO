@@ -2,9 +2,10 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
@@ -19,7 +20,11 @@ public class CadastroPanel extends JPanel {
 	
 	private JButton button;
 	
-	Hashtable<String, JComponent> rows;
+	Hashtable<String, JComponent> fields;
+	
+	Hashtable<String, JLabel> labels;
+	
+	Hashtable<String, Integer> ids;
 	
 	JPanel westPanel;
 	
@@ -29,12 +34,14 @@ public class CadastroPanel extends JPanel {
 	
 	public CadastroPanel(String buttonLabel, String buttonActionCommand)
 	{
-		rows = new Hashtable<String, JComponent>();
+		fields = new Hashtable<String, JComponent>();
+		labels = new Hashtable<String, JLabel>();
+		ids = new Hashtable<String, Integer>();
 		
 		setOpaque(false);
 		setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(300,300));
+		//setPreferredSize(new Dimension(400,0));
 		setBackground(Color.blue);
 		
 		westPanel = new JPanel();
@@ -52,6 +59,8 @@ public class CadastroPanel extends JPanel {
 		westPanel.setLayout(new GridLayout(0,1,10,10));
 		centerPanel.setLayout(new GridLayout(0,1,10,10));
 		
+		//centerPanel.setPreferredSize(new Dimension(300, 300));
+		
 		southPanel.add(button);
 		
 		add(westPanel, BorderLayout.WEST);
@@ -65,19 +74,83 @@ public class CadastroPanel extends JPanel {
 	/**
 	 * 
 	 */
+	/*public void reset()
+	{
+		fields = new Hashtable<String, JComponent>();
+		labels = new Hashtable<String, JLabel>();
+		westPanel.removeAll();
+		centerPanel.removeAll();
+	}*/
+	
+	/**
+	 * 
+	 */
 	public void addRow(String label, JComponent component)
 	{
-		rows.put(label, component);
-		westPanel.add(new JLabel(label));
+		addRow(label, component, 0);
+	}
+	
+	/**
+	 * 
+	 */
+	public void addRow(String label, JComponent component, Integer id)
+	{
+		JLabel jl = new JLabel(label);
+		
+		fields.put(label, component);
+		labels.put(label, jl);
+		ids.put(label, id);
+		
+		westPanel.add(jl);
 		centerPanel.add(component);
 	}
 	
 	/**
 	 * 
 	 */
-	public JComponent getRow(String label)
+	public void removeRow(String label)
 	{
-		return rows.get(label);
+		System.out.println(label);
+		westPanel.remove(labels.get(label));
+		centerPanel.remove(fields.get(label));
+		
+		fields.remove(label);
+		labels.remove(label);
+		ids.remove(label);
+		
+		repaint();
+		validate();
+	}
+	
+	/**
+	 * 
+	 */
+	public JComponent getComponent(String label)
+	{
+		return fields.get(label);
+	}
+	
+	/**
+	 * 
+	 */
+	public int getId(String label)
+	{
+		return ids.get(label);
+	}
+	
+	/**
+	 * 
+	 */
+	public ArrayList<String> getKeys()
+	{
+		ArrayList<String> keys = new ArrayList<String>();
+		Enumeration e = fields.keys();
+		
+		while(e.hasMoreElements()){
+			keys.add((String) e.nextElement());
+		}
+		
+		return keys;
 	}
 	
 	/**

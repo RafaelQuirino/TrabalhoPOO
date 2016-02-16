@@ -3,8 +3,12 @@ package gui;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 import app.Application;
+import model.Professor;
+import model.Turma;
 import model.Usuario;
 
 public class AdminScreen extends Screen {
@@ -23,19 +27,36 @@ public class AdminScreen extends Screen {
 		Application.ADMIN_ALUNOS
 	};
 	
+	private static final String PROFESSORES_COLUMNS[] = {
+		"Nome",
+		"Disciplina",
+		"Turmas"
+	};
+	
+	private static final String TURMAS_COLUMNS[] = {
+		"Nome",
+		"Alunos"
+	};
+	
+	private static final String ALUNOS_COLUMNS[] = {
+		"Nome",
+		"Matricula",
+		"Turma"
+	};
+	
 	// Instance fields --------------------------------------------------------
 	
 	private JButton buttons[];
 	
-	private ProfessoresPanel professoresPanel;
-	private CadastroProfessor cadastroProfessor;
-	private AdicionarTurmaPanel adicionarTurmaPanel;
+	private ListagemPanel professoresPanel;
+	private CadastroPanel cadastroProfessor;
+	private CadastroPanel adicionarTurmaPanel;
 	
-	private TurmaPanel turmaPanel;
-	private CadastroTurma cadastroTurma;
+	private ListagemPanel turmaPanel;
+	private CadastroPanel cadastroTurma;
 	
-	private AlunosPanel alunosPanel;
-	private CadastroAluno cadastroAluno;
+	private ListagemPanel alunosPanel;
+	private CadastroPanel cadastroAluno;
 	
 	// Constructors -----------------------------------------------------------
 	
@@ -45,15 +66,69 @@ public class AdminScreen extends Screen {
 		
 		addPath(Usuario.ADMINISTRADOR);
 		
-		professoresPanel = new ProfessoresPanel();
-		cadastroProfessor = new CadastroProfessor();
-		adicionarTurmaPanel = new AdicionarTurmaPanel();
+		// professoresPanel setup
 		
-		turmaPanel = new TurmaPanel();
-		cadastroTurma = new CadastroTurma();
+		professoresPanel = new ListagemPanel(PROFESSORES_COLUMNS);
 		
-		alunosPanel = new AlunosPanel();
-		cadastroAluno = new CadastroAluno();
+		professoresPanel.addButton(
+			"Novo Professor", Application.ADMIN_NOVO_PROFESSOR_COMMAND
+		);
+		professoresPanel.addButton(
+			"Adicionar Turma", Application.ADMIN_ADICIONAR_TURMA_COMMAND
+		);
+		
+		// cadastroProfessor setup
+		
+		cadastroProfessor = new CadastroPanel(
+			"Criar Professor", Application.ADMIN_CRIAR_PROFESSOR_COMMAND
+		);
+		cadastroProfessor.addRow("Nome", new JTextField());
+		cadastroProfessor.addRow("Registro", new JTextField());
+		cadastroProfessor.addRow("Disciplina", new JTextField());
+		cadastroProfessor.addRow("Login", new JTextField());
+		cadastroProfessor.addRow("Senha", new JTextField());
+		
+		// adicionarTurmaPanel setup
+		
+		adicionarTurmaPanel = new CadastroPanel(
+			"Adicionar Turma", Application.ADMIN_DO_ADICIONAR_TURMA_COMMAND
+		);
+		adicionarTurmaPanel.addRow("Professor", new JComboBox<Professor>());
+		adicionarTurmaPanel.addRow("Turma", new JComboBox<Turma>());
+		
+		// turmaPanel setup
+		
+		turmaPanel = new ListagemPanel(TURMAS_COLUMNS);
+		
+		turmaPanel.addButton(
+			"Nova Turma", Application.ADMIN_NOVA_TURMA_COMMAND
+		);
+		
+		// cadastroTurma setup
+		
+		cadastroTurma = new CadastroPanel(
+			"Criar Turma", Application.ADMIN_CRIAR_TURMA_COMMAND
+		);
+		cadastroTurma.addRow("Nome", new JTextField());
+		
+		// alunosPanel setup
+		
+		alunosPanel = new ListagemPanel(ALUNOS_COLUMNS);
+		
+		alunosPanel.addButton(
+			"Novo Aluno", Application.ADMIN_NOVO_ALUNO_COMMAND
+		);
+		
+		// cadastroAluno setup
+		
+		cadastroAluno = new CadastroPanel(
+			"Criar Aluno", Application.ADMIN_CRIAR_ALUNO_COMMAND
+		);
+		cadastroAluno.addRow("Turma", new JComboBox<Turma>());
+		cadastroAluno.addRow("Nome", new JTextField());
+		cadastroAluno.addRow("Matrícula", new JTextField());
+		cadastroAluno.addRow("Login", new JTextField());
+		cadastroAluno.addRow("Senha", new JTextField());
 	}
 	
 	// Methods ----------------------------------------------------------------
@@ -92,37 +167,37 @@ public class AdminScreen extends Screen {
 	
 	// Setters and Getters ----------------------------------------------------
 	
-	public CadastroProfessor getCadastroProfessor()
+	public CadastroPanel getCadastroProfessor()
 	{
 		return cadastroProfessor;
 	}
 	
-	public ProfessoresPanel getProfessoresPanel()
+	public ListagemPanel getProfessoresPanel()
 	{
 		return professoresPanel;
 	}
 	
-	public TurmaPanel getTurmaPanel()
+	public ListagemPanel getTurmaPanel()
 	{
 		return turmaPanel;
 	}
 	
-	public CadastroTurma getCadastroTurma()
+	public CadastroPanel getCadastroTurma()
 	{
 		return cadastroTurma;
 	}
 	
-	public AlunosPanel getAlunosPanel()
+	public ListagemPanel getAlunosPanel()
 	{
 		return alunosPanel;
 	}
 	
-	public CadastroAluno getCadastroAluno()
+	public CadastroPanel getCadastroAluno()
 	{
 		return cadastroAluno;
 	}
 	
-	public AdicionarTurmaPanel getAdicionarTurmaPanel()
+	public CadastroPanel getAdicionarTurmaPanel()
 	{
 		return adicionarTurmaPanel;
 	}
