@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class CadastroPanel extends JPanel {
 	
 	Hashtable<String, Integer> ids;
 	
+	Hashtable<String, JPanel> panels;
+	
 	JPanel westPanel;
 	
 	JPanel centerPanel;
@@ -37,6 +41,7 @@ public class CadastroPanel extends JPanel {
 		fields = new Hashtable<String, JComponent>();
 		labels = new Hashtable<String, JLabel>();
 		ids = new Hashtable<String, Integer>();
+		panels = new Hashtable<String, JPanel>();
 		
 		setOpaque(false);
 		setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -51,6 +56,7 @@ public class CadastroPanel extends JPanel {
 				
 		button = new JButton(buttonLabel);
 		button.setActionCommand(buttonActionCommand);
+		button.setPreferredSize(new Dimension(0, 50));
 		
 		westPanel.setOpaque(false);
 		centerPanel.setOpaque(false);
@@ -65,7 +71,7 @@ public class CadastroPanel extends JPanel {
 		
 		add(westPanel, BorderLayout.WEST);
 		add(centerPanel, BorderLayout.CENTER);
-		add(southPanel, BorderLayout.SOUTH);
+		add(button, BorderLayout.SOUTH);
 		
 	}
 	
@@ -96,13 +102,25 @@ public class CadastroPanel extends JPanel {
 	public void addRow(String label, JComponent component, Integer id)
 	{
 		JLabel jl = new JLabel(label);
+
+		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(300, 60));
+		panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		panel.setOpaque(false);
+		panel.setLayout(new BorderLayout());
+		panel.add(component, BorderLayout.CENTER);
 		
 		fields.put(label, component);
 		labels.put(label, jl);
 		ids.put(label, id);
+		panels.put(label, panel);
 		
 		westPanel.add(jl);
-		centerPanel.add(component);
+		centerPanel.add(panel);
+		
+
+		//validate();
+		//repaint();
 	}
 	
 	/**
@@ -110,9 +128,8 @@ public class CadastroPanel extends JPanel {
 	 */
 	public void removeRow(String label)
 	{
-		System.out.println(label);
 		westPanel.remove(labels.get(label));
-		centerPanel.remove(fields.get(label));
+		centerPanel.remove(panels.get(label));
 		
 		fields.remove(label);
 		labels.remove(label);

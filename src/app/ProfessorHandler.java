@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 import gui.CadastroPanel;
 import gui.Frame;
+import gui.ListagemPanel;
 import gui.ProfessorScreen;
 import model.Aluno;
 import model.Avaliacao;
@@ -53,8 +54,17 @@ public class ProfessorHandler implements ActionListener {
 			case Application.PROFESSOR_CRIAR_AVALIACAO:
 				criarAvaliacao();
 				break;
+			
+			case Application.PROFESSOR_AVALIACAO_RELATORIO:
+				avaliacaoRelatorio();
+				break;
+				
+			case Application.PROFESSOR_AVALIACAO_GERAR_RELATORIO:
+				avaliacaoGerarRelatorio();
+				break;
 				
 		}
+		getScreen().validate();
 	}
 	
 	// Private methods --------------------------------------------------------
@@ -80,6 +90,7 @@ public class ProfessorHandler implements ActionListener {
 		for(Avaliacao a : (ArrayList<Avaliacao>)Model.all(Avaliacao.class))
 		{
 			String data[] = {
+				a.getNome(),
 				a.getTurma().getNome(),
 				a.getData(),
 				String.format("%.2f", a.media())
@@ -100,6 +111,13 @@ public class ProfessorHandler implements ActionListener {
 		JComboBox combo = (JComboBox)cadastro.getComponent("Turma");
 		((JComboBox)cadastro.getComponent("Turma")).removeAllItems();
 		((JTextField)cadastro.getComponent("Data")).setText("");
+		
+		for(String key : cadastro.getKeys())
+		{
+			if(!key.equals("Data") && !key.equals("Turma") &&
+			   !key.equals("Nome") && !key.equals("Alunos"))
+				cadastro.removeRow(key);
+		}
 		
 		int professorId = Usuario.getUsuarioAtual().getPessoa().getId();
 		
@@ -149,9 +167,11 @@ public class ProfessorHandler implements ActionListener {
 		avaliacao.setProfessorId(Usuario.getUsuarioAtual().getPessoaId());
 		avaliacao.setTurmaId(turma.getId());
 		avaliacao.setData(((JTextField)cadastro.getComponent("Data")).getText());
+		avaliacao.setNome(((JTextField)cadastro.getComponent("Nome")).getText());
 		
 		for(String label : cadastro.getKeys()){
-			if(!label.equals("Data") && !label.equals("Turma"))
+			if(!label.equals("Data") && !label.equals("Turma") &&
+			   !label.equals("Nome") && !label.equals("Alunos"))
 			{
 				int alunoId = cadastro.getId(label);
 				
@@ -163,6 +183,78 @@ public class ProfessorHandler implements ActionListener {
 		Model.createModel(avaliacao);
 		avaliacoes();
 		
+	}
+	
+	/**
+	 * Avaliacao Relatorio Form
+	 */
+	private void avaliacaoRelatorio()
+	{
+		final ProfessorScreen screen = getScreen();
+		final CadastroPanel cadastro = screen.getCadastroAvaliacaoRelatorio();
+		
+		final JComboBox turmaCombo = (JComboBox)cadastro.getComponent("Turma");
+		((JComboBox)cadastro.getComponent("Nome")).setVisible(false);
+		
+		turmaCombo.removeAllItems();
+		
+		int professorId = Usuario.getUsuarioAtual().getPessoaId();
+		final Professor professor = (Professor)Model.find(Professor.class, professorId);
+		
+		turmaCombo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event)
+			{
+				JComboBox nomeCombo = (JComboBox)cadastro.getComponent("Nome");
+				nomeCombo.removeAllItems();
+				Turma t = (Turma)turmaCombo.getSelectedItem();
+				
+				if(t instanceof Turma)
+				{
+					int turmaId = t.getId();
+					for(Avaliacao a : professor.getTurmaAvaliacoes(turmaId))
+						nomeCombo.addItem(a);
+					
+					((JComboBox)cadastro.getComponent("Nome")).setVisible(true);
+					screen.validate();
+				}
+			}
+		});
+		
+		ArrayList<Turma> turmas = professor.getTurmas();
+		
+		for(Turma t : turmas)
+			turmaCombo.addItem(t);
+		
+		screen.setDisplay(cadastro);
+	}
+	
+	/**
+	 * Gerar Relatorio de Avaliacoes
+	 */
+	public void avaliacaoGerarRelatorio()
+	{
+		ProfessorScreen screen = getScreen();
+		CadastroPanel cadastro = screen.getCadastroAvaliacaoRelatorio();
+		ListagemPanel listagem = screen.getRelatorioAvaliacao();
+		
+		listagem.reset();
+		
+		int turmaId = ((Turma)
+			((JComboBox)cadastro.getComponent("Turma")).getSelectedItem()).getId();
+		
+		Avaliacao avaliacao = ((Avaliacao)
+			((JComboBox)cadastro.getComponent("Nome")).getSelectedItem());
+		
+		for(Integer id : avaliacao.getAlunoIds())
+		{
+			Aluno a = (Aluno)Model.find(Aluno.class, id);
+			
+			listagem.addRow(new String[]{
+				a.getNome(),
+				String.format("%.2f", avaliacao.getNota(id))
+			});
+		}
+		screen.setDisplay(listagem);
 	}
 	
 	////////////////

@@ -21,6 +21,8 @@ public class Avaliacao extends Model {
 	
 	private String data;
 	
+	private String nome;
+	
 	private Hashtable<Integer,Float> notas;
 
 	// Constructors -----------------------------------------------------------
@@ -28,6 +30,19 @@ public class Avaliacao extends Model {
 	public Avaliacao()
 	{
 		notas = new Hashtable<Integer, Float>();
+	}
+	
+	// Instance methods -------------------------------------------------------
+	
+	public ArrayList<Integer> getAlunoIds()
+	{
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+		Enumeration e = notas.keys();
+		
+		while(e.hasMoreElements())
+			ids.add((Integer)e.nextElement());
+		
+		return ids;
 	}
 	
 	public float media()
@@ -45,6 +60,11 @@ public class Avaliacao extends Model {
 		}
 		
 		return soma/count;
+	}
+	
+	public String toString()
+	{
+		return getNome();
 	}
 	
 	// Setters and Getters ----------------------------------------------------
@@ -87,6 +107,14 @@ public class Avaliacao extends Model {
 
 	public void setData(String data) {
 		this.data = data;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
 }

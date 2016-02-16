@@ -26,6 +26,8 @@ public class Application {
 	public static final String PROFESSOR_NOVA_AVALIACAO = "nova avaliacao";
 	public static final String PROFESSOR_NOVA_AVALIACAO_CHANGE_COMBO = "pcacc";
 	public static final String PROFESSOR_CRIAR_AVALIACAO = "Criar Avaliação";
+	public static final String PROFESSOR_AVALIACAO_RELATORIO = "Relatorio Avaliacao";
+	public static final String PROFESSOR_AVALIACAO_GERAR_RELATORIO = "Gerar Relatorio Avaliacao";
 	
 	public Application()
 	{
