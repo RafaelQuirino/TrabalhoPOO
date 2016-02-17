@@ -11,6 +11,7 @@ import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -91,6 +92,8 @@ public class CadastroPanel extends JPanel {
 				((JTextField)comp).setText("");
 			else if(comp instanceof JTextField)
 				((JPasswordField)comp).setText("");
+			else if(comp instanceof JComboBox)
+				((JComboBox)comp).removeAllItems();
 		}
 	}
 	

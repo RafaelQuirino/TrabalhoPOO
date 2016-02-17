@@ -34,6 +34,22 @@ public class Turma extends Model {
 		return nome;
 	}
 	
+	// Data operation ---------------------------------------------------------
+	
+	/**
+	 * 
+	 */
+	public ArrayList<Avaliacao> getAvaliacoes()
+	{
+		ArrayList<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
+		
+		for(Avaliacao a : (ArrayList<Avaliacao>)Model.all(Avaliacao.class))
+			if(professorIds.contains(a.getProfessorId()))
+				avaliacoes.add(a);
+		
+		return avaliacoes;
+	}
+	
 	/**
 	 * 
 	 */

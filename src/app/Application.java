@@ -34,6 +34,11 @@ public class Application {
 	public static final String PROFESSOR_AULA_RELATORIO = "professor aula relatorio";
 	public static final String PROFESSOR_AULA_GERAR_RELATORIO = "professor aula gerar relatorio";
 	
+	public static final String ALUNO_AVALIACOES = "aluno avaliacoes";
+	public static final String ALUNO_AULAS = "aluno aulas";
+	public static final String ALUNO_AVALIACOES_RELATORIO = "aluno avaliacoes relatorio";
+	public static final String ALUNO_AVALIACOES_GERAR_RELATORIO = "aluno av gerar relatorio";
+	
 	public Application()
 	{
 		Frame frame = new Frame();

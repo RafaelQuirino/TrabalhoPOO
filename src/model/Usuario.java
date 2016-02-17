@@ -74,7 +74,16 @@ public class Usuario extends Model{
 	}
 	
 	public Pessoa getPessoa(){
-		return (Pessoa)Model.find(Pessoa.class, pessoaId);
+		Pessoa p = null;
+		
+		if(getTipo().equals(ALUNO))
+			p = (Aluno)Model.find(Aluno.class, pessoaId);
+		else if(getTipo().equals(PROFESSOR))
+			p = (Professor)Model.find(Professor.class, pessoaId);
+		else if(getTipo().equals(ADMINISTRADOR))
+			p = (Pessoa)Model.find(Pessoa.class, pessoaId);
+		
+		return p;
 	}
 	
 	public void setTipo(String tipo){

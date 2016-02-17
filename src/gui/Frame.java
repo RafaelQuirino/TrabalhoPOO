@@ -81,6 +81,7 @@ public class Frame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				setContentPane(login);
 				login.resetAuthentication();
+				validate();
 			}
 		});
 		

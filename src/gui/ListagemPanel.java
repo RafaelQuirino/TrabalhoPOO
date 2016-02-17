@@ -42,6 +42,7 @@ public class ListagemPanel extends JPanel {
 		DefaultTableModel dtm = new DefaultTableModel(0, 0);
 		dtm.setColumnIdentifiers(columns);
 		table.setModel(dtm);
+		table.setAutoCreateRowSorter(true);
 		
 		tablePanel.add(table.getTableHeader(), BorderLayout.NORTH);
 		tablePanel.add(new JScrollPane(table), BorderLayout.CENTER);

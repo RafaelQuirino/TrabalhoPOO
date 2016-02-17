@@ -110,9 +110,8 @@ public class ProfessorHandler implements ActionListener {
 	{
 		ProfessorScreen screen = getScreen();
 		screen.getAvaliacoesPanel().reset();
-		screen.setDisplay(screen.getAvaliacoesPanel());
 		
-		for(Avaliacao a : (ArrayList<Avaliacao>)Model.all(Avaliacao.class))
+		for(Avaliacao a : getProfessor().getAvaliacoes())
 		{
 			String data[] = {
 				a.getNome(),
@@ -122,6 +121,7 @@ public class ProfessorHandler implements ActionListener {
 			};
 			screen.getAvaliacoesPanel().addRow(data);
 		}
+		screen.setDisplay(screen.getAvaliacoesPanel());
 	}
 	
 	/**

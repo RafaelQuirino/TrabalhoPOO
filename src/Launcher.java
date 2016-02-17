@@ -13,6 +13,8 @@ import javax.swing.SwingUtilities;
 import app.Application;
 import app.Model;
 import model.Aluno;
+import model.Pessoa;
+import model.Professor;
 import model.Usuario;
 
 public class Launcher {
@@ -20,12 +22,48 @@ public class Launcher {
 	public static String stripAccents(String s) 
 	{
 	    s = Normalizer.normalize(s, Normalizer.Form.NFD);
-	    s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-	    return s.replaceAll(" ", "").toLowerCase();
+	    s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "").replace(" ", "").toLowerCase();
+	    return s;
 	}
 	
 	public static void main(String args[]) throws Exception
 	{
+		
+		/*for(Pessoa p : (ArrayList<Professor>)Model.all(Professor.class))
+		{
+			String login = stripAccents(p.getNome()),
+				   senha = login;
+			
+			/*if(!(p.getId() == 7))
+			{
+				Usuario u = new Usuario();
+				u.setLogin(login);
+				u.setSenha(login);
+				u.setPessoaId(p.getId());
+				u.setTipo("Professor");
+				Model.createModel(u);
+			}*/
+			
+			/*System.out.println(p.getId() + ": " + p.getNome() + " - " + login);
+		}
+		
+
+		System.out.println("------------------------------------------");
+		
+		for(Pessoa p : (ArrayList<Aluno>)Model.all(Aluno.class))
+		{
+			String login = stripAccents(p.getNome()),
+				   senha = login;
+			
+			System.out.println(p.getId() + ": " + p.getNome() + " - " + login);
+		}
+		
+		System.out.println("------------------------------------------");
+		
+		for(Usuario u : (ArrayList<Usuario>)Model.all(Usuario.class)){
+			System.out.println(u.getLogin() + " - " + u.getPessoaId());
+		}*/
+		
 		
 		ArrayList<String> models = new ArrayList<String>();
 

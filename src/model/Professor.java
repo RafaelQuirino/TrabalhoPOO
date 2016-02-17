@@ -38,6 +38,20 @@ public class Professor extends Pessoa {
 	/**
 	 * 
 	 */
+	public ArrayList<Avaliacao> getAvaliacoes()
+	{
+		ArrayList<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
+		
+		for(Avaliacao a : (ArrayList<Avaliacao>)Model.all(Avaliacao.class))
+			if(a.getProfessorId() == getId())
+				avaliacoes.add(a);
+		
+		return avaliacoes;
+	}
+	
+	/**
+	 * 
+	 */
 	public ArrayList<Aula> getTurmaAulas(int turmaId)
 	{
 		ArrayList<Aula> aulas = new ArrayList<Aula>();
