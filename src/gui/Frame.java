@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import app.AdminHandler;
+import app.AlunoHandler;
 import app.LoginHandler;
+import app.ProfessorHandler;
 import model.Usuario;
 
 public class Frame extends JFrame {
@@ -24,11 +27,11 @@ public class Frame extends JFrame {
 	
 	private Screen screen;
 	
-	private ActionListener adminHandler;
+	private AdminHandler adminHandler;
 	
-	private ActionListener professorHandler;
+	private ProfessorHandler professorHandler;
 	
-	private ActionListener alunoHandler;
+	private AlunoHandler alunoHandler;
 	
 	// Constructors -----------------------------------------------------------
 	
@@ -62,16 +65,19 @@ public class Frame extends JFrame {
 			case Usuario.ADMINISTRADOR:
 				screen = new AdminScreen();
 				screen.setHandler(adminHandler);
+				adminHandler.listagemProfessores();
 				break;
 			
 			case Usuario.PROFESSOR:
 				screen = new ProfessorScreen();
 				screen.setHandler(professorHandler);
+				professorHandler.avaliacoes();
 				break;
 				
 			case Usuario.ALUNO:
 				screen = new AlunoScreen();
 				screen.setHandler(alunoHandler);
+				alunoHandler.avaliacoes();
 				break;
 		}
 		
@@ -103,15 +109,15 @@ public class Frame extends JFrame {
 		login.addHandler(handler);
 	}
 	
-	public void setAdminHandler(ActionListener adminHandler){
+	public void setAdminHandler(AdminHandler adminHandler){
 		this.adminHandler = adminHandler;
 	}
 	
-	public void setProfessorHandler(ActionListener handler){
+	public void setProfessorHandler(ProfessorHandler handler){
 		this.professorHandler = handler;
 	}
 	
-	public void setAlunoHandler(ActionListener handler){
+	public void setAlunoHandler(AlunoHandler handler){
 		this.alunoHandler = handler;
 	}
 }

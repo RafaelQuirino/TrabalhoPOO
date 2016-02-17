@@ -106,10 +106,11 @@ public class ProfessorHandler implements ActionListener {
 	/**
 	 * Listagem de avaliacoes
 	 */
-	private void avaliacoes()
+	public void avaliacoes()
 	{
 		ProfessorScreen screen = getScreen();
 		screen.getAvaliacoesPanel().reset();
+		screen.setPath(new String[]{"Professor", "Avaliações"});
 		
 		for(Avaliacao a : getProfessor().getAvaliacoes())
 		{
@@ -131,7 +132,7 @@ public class ProfessorHandler implements ActionListener {
 	{
 		doingNovaAvaliacao = true;
 		ProfessorScreen screen = getScreen();
-		
+		screen.setPath(new String[]{"Professor", "Avaliações", "Cadastro"});
 		CadastroPanel cadastro = screen.getCadastroAvaliacaoPanel();
 		JComboBox combo = (JComboBox)cadastro.getComponent("Turma");
 		((JComboBox)cadastro.getComponent("Turma")).removeAllItems();
@@ -211,6 +212,7 @@ public class ProfessorHandler implements ActionListener {
 	{
 		final ProfessorScreen screen = getScreen();
 		final CadastroPanel cadastro = screen.getCadastroAvaliacaoRelatorio();
+		screen.setPath(new String[]{"Professor", "Avaliação", "Relatório de Avaliações"});
 		
 		final JComboBox turmaCombo = (JComboBox)cadastro.getComponent("Turma");
 		((JComboBox)cadastro.getComponent("Nome")).setVisible(false);
@@ -283,6 +285,7 @@ public class ProfessorHandler implements ActionListener {
 	private void aulas()
 	{
 		ProfessorScreen screen = getScreen();
+		screen.setPath(new String[]{"Professor", "Aulas"});
 		ListagemPanel listagem = screen.getListagemAulas();
 		listagem.reset();
 		
@@ -302,6 +305,7 @@ public class ProfessorHandler implements ActionListener {
 	private void novaAula()
 	{
 		final ProfessorScreen screen = getScreen();
+		screen.setPath(new String[]{"Professor", "Aulas", "Cadastro"});
 		final CadastroPanel cadastro = screen.getCadastroAula();
 		//cadastro.reset();
 		final JComboBox<Turma> turmaCombo = (JComboBox)cadastro.getComponent("Turma");
@@ -365,6 +369,7 @@ public class ProfessorHandler implements ActionListener {
 	private void aulaRelatorio()
 	{
 		final ProfessorScreen screen = getScreen();
+		screen.setPath(new String[]{"Professor", "Aulas", "Relatório de Aulas"});
 		final CadastroPanel cadastro = screen.getCadastroAulaRelatorio();
 		
 		final JComboBox turmaCombo = (JComboBox)cadastro.getComponent("Turma");

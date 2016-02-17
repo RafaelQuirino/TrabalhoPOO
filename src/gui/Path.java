@@ -34,6 +34,7 @@ public class Path extends JPanel {
 	{
 		paths = new ArrayList<String>();
 		removeAll();
+		validate();
 	}
 	
 	/**
@@ -55,6 +56,17 @@ public class Path extends JPanel {
 			add(separator);
 		
 		add(label);
+	}
+	
+	/**
+	 * 
+	 */
+	public void setPath(String paths[])
+	{
+		reset();
+		
+		for(String s : paths)
+			addPath(s);
 	}
 	
 }

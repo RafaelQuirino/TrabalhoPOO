@@ -102,8 +102,10 @@ public class AdminHandler implements ActionListener {
 	/**
 	 * Listagem professores
 	 */
-	private void listagemProfessores()
+	public void listagemProfessores()
 	{
+		getScreen().setPath(new String[]{"Admin", "Professores"});
+		
 		ArrayList<Professor> professores = Model.all(Professor.class);
 		
 		AdminScreen screen = (AdminScreen) frame.getScreen();
@@ -137,6 +139,7 @@ public class AdminHandler implements ActionListener {
 	 */
 	private void novoProfessor()
 	{
+		getScreen().setPath(new String[]{"Admin", "Professores", "Cadastro"});
 		getScreen().showCadastroProfessor();
 	}
 	
@@ -171,6 +174,8 @@ public class AdminHandler implements ActionListener {
 	 */
 	private void adicionarTurma()
 	{
+		getScreen().setPath(new String[]{"Admin", "Professores", "Adicionar Professor à Turma"});
+		
 		AdminScreen screen = getScreen();
 		CadastroPanel cadastro = screen.getAdicionarTurmaPanel();
 		
@@ -220,6 +225,7 @@ public class AdminHandler implements ActionListener {
 	 */
 	private void listagemTurmas()
 	{
+		getScreen().setPath(new String[]{"Admin", "Turmas"});
 		ArrayList<Turma> turmas = Model.all(Turma.class);
 		getScreen().setDisplay(getScreen().getTurmaPanel());
 		getScreen().getTurmaPanel().reset();
@@ -238,6 +244,7 @@ public class AdminHandler implements ActionListener {
 	 */
 	private void novaTurma()
 	{
+		getScreen().setPath(new String[]{"Admin", "Turmas", "Cadastro"});
 		getScreen().setDisplay(getScreen().getCadastroTurma());
 	}
 	
@@ -261,6 +268,7 @@ public class AdminHandler implements ActionListener {
 	 */
 	private void listagemAlunos()
 	{
+		getScreen().setPath(new String[]{"Admin", "Alunos"});
 		ArrayList<Aluno> alunos = Model.all(Aluno.class);
 		
 		AdminScreen screen = getScreen();
@@ -283,6 +291,7 @@ public class AdminHandler implements ActionListener {
 	 */
 	private void novoAluno()
 	{
+		getScreen().setPath(new String[]{"Admin", "Alunos", "Cadastro"});
 		AdminScreen screen = getScreen();
 		CadastroPanel cadastro = screen.getCadastroAluno();
 		cadastro.clear();

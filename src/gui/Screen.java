@@ -97,6 +97,13 @@ public abstract class Screen extends JPanel {
 		path.addPath(text);
 	}
 	
+	public void setPath(String paths[])
+	{
+		path.setPath(paths);
+		validate();
+		repaint();
+	}
+	
 	/**
 	 * 
 	 */

@@ -66,7 +66,7 @@ public class ListagemPanel extends JPanel {
 		
 		table.setIntercellSpacing(new Dimension(10,10));
 		table.setFillsViewportHeight(true);
-		table.setRowHeight(50);
+		table.setRowHeight(40);
 	}
 	
 	// Methods ----------------------------------------------------------------

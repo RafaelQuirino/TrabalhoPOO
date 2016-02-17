@@ -70,9 +70,10 @@ public class AlunoHandler implements ActionListener {
 	/**
 	 * 
 	 */
-	private void avaliacoes()
+	public void avaliacoes()
 	{
 		AlunoScreen screen = getScreen();
+		screen.setPath(new String[]{"Aluno", "Avaliações"});
 		ListagemPanel listagem = screen.getListagemAvaliacoes();
 		listagem.reset();
 		
@@ -97,6 +98,7 @@ public class AlunoHandler implements ActionListener {
 	private void avaliacoesRelatorio()
 	{
 		AlunoScreen screen = getScreen();
+		screen.setPath(new String[]{"Aluno", "Avaliações", "Relatório de Avaliações"});
 		CadastroPanel cadastro = screen.getAvaliacoesCadastroRelatorio();
 		cadastro.clear();
 		
@@ -142,6 +144,7 @@ public class AlunoHandler implements ActionListener {
 	private void aulas()
 	{
 		AlunoScreen screen = getScreen();
+		screen.setPath(new String[]{"Aluno", "Aulas"});
 		ListagemPanel listagem = screen.getListagemAulas();
 		Aluno aluno = getAluno();
 		listagem.reset();
@@ -162,6 +165,7 @@ public class AlunoHandler implements ActionListener {
 	private void aulasRelatorio()
 	{
 		AlunoScreen screen = getScreen();
+		screen.setPath(new String[]{"Aluno", "Aulas", "Relatório de Aulas"});
 		CadastroPanel cadastro = screen.getAulasCadastroRelatorio();
 		cadastro.clear();
 		
