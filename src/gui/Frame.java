@@ -28,6 +28,8 @@ public class Frame extends JFrame {
 	
 	private ActionListener professorHandler;
 	
+	private ActionListener alunoHandler;
+	
 	// Constructors -----------------------------------------------------------
 	
 	public Frame()
@@ -65,6 +67,12 @@ public class Frame extends JFrame {
 			case Usuario.PROFESSOR:
 				screen = new ProfessorScreen();
 				screen.setHandler(professorHandler);
+				break;
+				
+			case Usuario.ALUNO:
+				screen = new AlunoScreen();
+				screen.setHandler(alunoHandler);
+				break;
 		}
 		
 		screen.setHeaderText(usuario.getTipo() + ": " + usuario.getPessoa().getNome());
@@ -82,43 +90,27 @@ public class Frame extends JFrame {
 	
 	// Setters and Getters ----------------------------------------------------
 	
-	/**
-	 * 
-	 */
-	public Login getLogin()
-	{
+	public Login getLogin(){
 		return login;
 	}
 	
-	/**
-	 * 
-	 */
-	public Screen getScreen()
-	{
+	public Screen getScreen(){
 		return screen;
 	}
 	
-	/**
-	 * 
-	 */
-	public void setLoginHandler(LoginHandler handler)
-	{
+	public void setLoginHandler(LoginHandler handler){
 		login.addHandler(handler);
 	}
 	
-	/**
-	 * 
-	 */
-	public void setAdminHandler(ActionListener adminHandler)
-	{
+	public void setAdminHandler(ActionListener adminHandler){
 		this.adminHandler = adminHandler;
 	}
 	
-	/**
-	 * 
-	 */
-	public void setProfessorHandler(ActionListener handler)
-	{
+	public void setProfessorHandler(ActionListener handler){
 		this.professorHandler = handler;
+	}
+	
+	public void setAlunoHandler(ActionListener handler){
+		this.alunoHandler = handler;
 	}
 }

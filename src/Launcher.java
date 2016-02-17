@@ -2,6 +2,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
@@ -11,13 +12,21 @@ import javax.swing.SwingUtilities;
 
 import app.Application;
 import app.Model;
-import model.Pessoa;
+import model.Aluno;
 import model.Usuario;
 
 public class Launcher {
 
+	public static String stripAccents(String s) 
+	{
+	    s = Normalizer.normalize(s, Normalizer.Form.NFD);
+	    s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+	    return s.replaceAll(" ", "").toLowerCase();
+	}
+	
 	public static void main(String args[]) throws Exception
 	{
+		
 		ArrayList<String> models = new ArrayList<String>();
 
 		final String path = "model";

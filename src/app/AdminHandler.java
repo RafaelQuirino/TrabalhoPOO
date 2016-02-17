@@ -315,13 +315,14 @@ public class AdminHandler implements ActionListener {
 		aluno.setMatricula(matricula);
 		aluno.setNome(nome);
 		aluno.setTurmaId(turmaId);
+		Model.createModel(aluno);
 		
 		Usuario usuario = new Usuario();
 		usuario.setLogin(login);
 		usuario.setSenha(senha);
 		usuario.setPessoaId(aluno.getId());
 		usuario.setTipo(Usuario.ALUNO);
-		Model.createModel(aluno);
+		
 		Model.createModel(usuario);
 		listagemAlunos();
 	}

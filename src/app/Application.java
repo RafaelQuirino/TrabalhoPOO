@@ -41,6 +41,7 @@ public class Application {
 		frame.setLoginHandler(new LoginHandler(frame));
 		frame.setAdminHandler(new AdminHandler(frame));
 		frame.setProfessorHandler(new ProfessorHandler(frame));
+		frame.setAlunoHandler(new AlunoHandler(frame));
 	}
 	
 }
