@@ -17,9 +17,9 @@ public class ListagemPanel extends JPanel {
 	
 	// Constants --------------------------------------------------------------
 	
-	private static final int WIDTH = 400;
+	private static final int WIDTH = 800;
 	
-	private static final int HEIGHT = 400;
+	private static final int HEIGHT = 500;
 	
 	// Instance fields --------------------------------------------------------
 	
@@ -63,6 +63,10 @@ public class ListagemPanel extends JPanel {
 		
 		add(p, BorderLayout.NORTH);
 		add(tablePanel, BorderLayout.CENTER);
+		
+		table.setIntercellSpacing(new Dimension(10,10));
+		table.setFillsViewportHeight(true);
+		table.setRowHeight(50);
 	}
 	
 	// Methods ----------------------------------------------------------------
