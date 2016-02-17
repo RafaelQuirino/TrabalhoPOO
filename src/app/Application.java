@@ -28,6 +28,11 @@ public class Application {
 	public static final String PROFESSOR_CRIAR_AVALIACAO = "Criar Avaliação";
 	public static final String PROFESSOR_AVALIACAO_RELATORIO = "Relatorio Avaliacao";
 	public static final String PROFESSOR_AVALIACAO_GERAR_RELATORIO = "Gerar Relatorio Avaliacao";
+	public static final String PROFESSOR_AULAS = "professor aulas";
+	public static final String PROFESSOR_NOVA_AULA = "professor nova aula";
+	public static final String PROFESSOR_CRIAR_AULA = "professor criar aula";
+	public static final String PROFESSOR_AULA_RELATORIO = "professor aula relatorio";
+	public static final String PROFESSOR_AULA_GERAR_RELATORIO = "professor aula gerar relatorio";
 	
 	public Application()
 	{

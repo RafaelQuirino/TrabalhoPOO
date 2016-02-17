@@ -33,6 +33,36 @@ public class Professor extends Pessoa {
 		return getNome();
 	}
 	
+	// Data operations --------------------------------------------------------
+	
+	/**
+	 * 
+	 */
+	public ArrayList<Aula> getTurmaAulas(int turmaId)
+	{
+		ArrayList<Aula> aulas = new ArrayList<Aula>();
+		
+		for(Aula a : getAulas())
+			if(turmaId == a.getTurmaId())
+				aulas.add(a);
+		
+		return aulas;
+	}
+	
+	/**
+	 * 
+	 */
+	public ArrayList<Aula> getAulas()
+	{
+		ArrayList<Aula> aulas = new ArrayList<Aula>();
+		
+		for(Aula a : (ArrayList<Aula>)Model.all(Aula.class))
+			if(getId() == a.getProfessorId())
+				aulas.add(a);
+		
+		return aulas;
+	}
+	
 	/**
 	 * 
 	 */

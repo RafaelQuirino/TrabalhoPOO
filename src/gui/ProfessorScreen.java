@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import app.Application;
+import model.Aula;
 import model.Avaliacao;
 import model.Turma;
 
@@ -15,10 +16,16 @@ public class ProfessorScreen extends Screen {
 	// Constants --------------------------------------------------------------
 	
 	private static final String labels[] = {
-		"Avaliações"
+		"Avaliações",
+		"Aulas"
 	};
 	
-	private static String AVALIACOES_COLUMNS[] = {
+	private static final String commands[] = {
+		Application.PROFESSOR_AVALIACOES,
+		Application.PROFESSOR_AULAS
+	};
+	
+	private static final String AVALIACOES_COLUMNS[] = {
 		"Nome",
 		"Turma",
 		"Data",
@@ -30,8 +37,15 @@ public class ProfessorScreen extends Screen {
 		"Nota"
 	};
 	
-	private static final String commands[] = {
-		Application.PROFESSOR_AVALIACOES
+	private static final String AULAS_COLUMNS[] = {
+		"Data",
+		"Turma",
+		"Faltas"
+	};
+	
+	private static final String AULA_RELATORIO_COLUMNS[] = {
+		"Nome",
+		"Presente"
 	};
 	
 	// Instance fields --------------------------------------------------------
@@ -43,6 +57,14 @@ public class ProfessorScreen extends Screen {
 	private CadastroPanel cadastroAvaliacaoRelatorio;
 	
 	private ListagemPanel relatorioAvaliacao;
+	
+	private ListagemPanel listagemAulas;
+	
+	private CadastroPanel cadastroAula;
+	
+	private CadastroPanel cadastroAulaRelatorio;
+	
+	private ListagemPanel aulaRelatorio;
 	
 	// Constructors -----------------------------------------------------------
 	
@@ -83,6 +105,31 @@ public class ProfessorScreen extends Screen {
 		
 		relatorioAvaliacao = new ListagemPanel(RELATORIO_AVALIACAO_COLUMNS);
 		
+		// listagemAulas setup
+		
+		listagemAulas = new ListagemPanel(AULAS_COLUMNS);
+		listagemAulas.addButton("Nova Aula", Application.PROFESSOR_NOVA_AULA);
+		listagemAulas.addButton("Relatório", Application.PROFESSOR_AULA_RELATORIO);
+		
+		// cadastroAula setup
+		
+		cadastroAula = new CadastroPanel(
+			"Criar Aula", Application.PROFESSOR_CRIAR_AULA
+		);
+		
+		cadastroAula.addRow("Data", new JTextField());
+		cadastroAula.addRow("Turma", new JComboBox<Turma>());
+		
+		cadastroAulaRelatorio = new CadastroPanel(
+			"Gerar Relatório", Application.PROFESSOR_AULA_GERAR_RELATORIO
+		);
+		
+		cadastroAulaRelatorio.addRow("Turma", new JComboBox<Turma>());
+		cadastroAulaRelatorio.addRow("Data", new JComboBox<Aula>());
+		
+		// aulaRelatorio setup
+		
+		aulaRelatorio = new ListagemPanel(AULA_RELATORIO_COLUMNS);
 	}
 	
 	// Instance Methods -------------------------------------------------------
@@ -90,9 +137,14 @@ public class ProfessorScreen extends Screen {
 	public void setHandler(ActionListener handler)
 	{
 		super.setHandler(handler);
+		
 		avaliacoesPanel.setHandler(handler);
 		cadastroAvaliacaoPanel.setHandler(handler);
 		cadastroAvaliacaoRelatorio.setHandler(handler);
+		listagemAulas.setHandler(handler);
+		cadastroAula.setHandler(handler);
+		cadastroAulaRelatorio.setHandler(handler);
+		
 		JComboBox combo = (JComboBox)cadastroAvaliacaoPanel.getComponent("Turma");
 		combo.addActionListener(handler);
 		combo.setActionCommand(Application.PROFESSOR_NOVA_AVALIACAO_CHANGE_COMBO);
@@ -125,5 +177,21 @@ public class ProfessorScreen extends Screen {
 	
 	public ListagemPanel getRelatorioAvaliacao(){
 		return relatorioAvaliacao;
+	}
+	
+	public ListagemPanel getListagemAulas(){
+		return listagemAulas;
+	}
+	
+	public CadastroPanel getCadastroAula(){
+		return cadastroAula;
+	}
+	
+	public CadastroPanel getCadastroAulaRelatorio(){
+		return cadastroAulaRelatorio;
+	}
+	
+	public ListagemPanel getAulaRelatorio(){
+		return aulaRelatorio;
 	}
 }

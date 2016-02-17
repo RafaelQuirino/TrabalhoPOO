@@ -3,7 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class CadastroPanel extends JPanel {
 
@@ -76,6 +77,22 @@ public class CadastroPanel extends JPanel {
 	}
 	
 	// Instance methods -------------------------------------------------------
+	
+	/**
+	 * 
+	 */
+	public void clear()
+	{
+		for(String key : getKeys())
+		{
+			JComponent comp = getComponent(key);
+			
+			if(comp instanceof JTextField)
+				((JTextField)comp).setText("");
+			else if(comp instanceof JTextField)
+				((JPasswordField)comp).setText("");
+		}
+	}
 	
 	/**
 	 * 

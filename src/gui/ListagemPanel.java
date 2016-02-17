@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -48,9 +49,18 @@ public class ListagemPanel extends JPanel {
 		setLayout(new BorderLayout());
 		
 		buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(1,0, 5, 5));
+		buttonsPanel.setLayout(new GridLayout(1,0, 10, 10));
+		buttonsPanel.setOpaque(false);
+		setOpaque(false);
 		
-		add(buttonsPanel, BorderLayout.NORTH);
+		JPanel p = new JPanel();
+		p.setLayout(new BorderLayout());
+		p.setPreferredSize(new Dimension(0, 50));
+		p.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		p.add(buttonsPanel, BorderLayout.CENTER);
+		p.setOpaque(false);
+		
+		add(p, BorderLayout.NORTH);
 		add(tablePanel, BorderLayout.CENTER);
 	}
 	

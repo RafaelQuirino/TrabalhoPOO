@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import app.Application;
@@ -28,6 +29,7 @@ public class AdminScreen extends Screen {
 	};
 	
 	private static final String PROFESSORES_COLUMNS[] = {
+		"Registro",
 		"Nome",
 		"Disciplina",
 		"Turmas"
@@ -86,7 +88,7 @@ public class AdminScreen extends Screen {
 		cadastroProfessor.addRow("Registro", new JTextField());
 		cadastroProfessor.addRow("Disciplina", new JTextField());
 		cadastroProfessor.addRow("Login", new JTextField());
-		cadastroProfessor.addRow("Senha", new JTextField());
+		cadastroProfessor.addRow("Senha", new JPasswordField());
 		
 		// adicionarTurmaPanel setup
 		
@@ -128,7 +130,7 @@ public class AdminScreen extends Screen {
 		cadastroAluno.addRow("Nome", new JTextField());
 		cadastroAluno.addRow("Matrícula", new JTextField());
 		cadastroAluno.addRow("Login", new JTextField());
-		cadastroAluno.addRow("Senha", new JTextField());
+		cadastroAluno.addRow("Senha", new JPasswordField());
 	}
 	
 	// Methods ----------------------------------------------------------------
@@ -147,6 +149,7 @@ public class AdminScreen extends Screen {
 	 */
 	public void showCadastroProfessor()
 	{
+		cadastroProfessor.clear();
 		setDisplay(cadastroProfessor);
 	}
 	

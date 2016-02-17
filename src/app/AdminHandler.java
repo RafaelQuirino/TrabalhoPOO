@@ -123,6 +123,7 @@ public class AdminHandler implements ActionListener {
 			}
 			
 			String data[] = {
+					p.getRegistro(),
 					p.getNome(),
 					p.getDisciplina(),
 					turmasString
@@ -284,7 +285,7 @@ public class AdminHandler implements ActionListener {
 	{
 		AdminScreen screen = getScreen();
 		CadastroPanel cadastro = screen.getCadastroAluno();
-		//cadastroAluno.resetTurma();
+		cadastro.clear();
 		JComboBox<Turma> turmaCombo = (JComboBox)cadastro.getComponent("Turma");
 		turmaCombo.removeAllItems();
 		

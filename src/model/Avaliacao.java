@@ -34,6 +34,9 @@ public class Avaliacao extends Model {
 	
 	// Instance methods -------------------------------------------------------
 	
+	/**
+	 * 
+	 */
 	public ArrayList<Integer> getAlunoIds()
 	{
 		ArrayList<Integer> ids = new ArrayList<Integer>();
@@ -45,6 +48,9 @@ public class Avaliacao extends Model {
 		return ids;
 	}
 	
+	/**
+	 * 
+	 */
 	public float media()
 	{
 		ArrayList<String> keys = new ArrayList<String>();
@@ -62,9 +68,22 @@ public class Avaliacao extends Model {
 		return soma/count;
 	}
 	
+	/**
+	 * 
+	 */
 	public String toString()
 	{
 		return getNome();
+	}
+	
+	// Data operations --------------------------------------------------------
+	
+	public Professor getProfessor() {
+		return (Professor) Model.find(Professor.class, professorId);
+	}
+	
+	public Turma getTurma() {
+		return (Turma)Model.find(Turma.class, turmaId);
 	}
 	
 	// Setters and Getters ----------------------------------------------------
@@ -77,20 +96,12 @@ public class Avaliacao extends Model {
 		return notas.get(alunoId);
 	}
 	
-	public Turma getTurma() {
-		return (Turma)Model.find(Turma.class, turmaId);
-	}
-	
 	public int getTurmaId(){
 		return turmaId;
 	}
 	
 	public void setTurmaId(int id) {
 		turmaId = id;
-	}
-
-	public Professor getProfessor() {
-		return (Professor) Model.find(Professor.class, professorId);
 	}
 	
 	public int getProfessorId(){
