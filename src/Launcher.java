@@ -8,14 +8,11 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 
 import app.Application;
 import app.Model;
-import model.Aluno;
-import model.Pessoa;
-import model.Professor;
-import model.Usuario;
 
 public class Launcher {
 
@@ -28,6 +25,15 @@ public class Launcher {
 	
 	public static void main(String args[]) throws Exception
 	{
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new java.io.File("."));
+		chooser.setDialogTitle("Arquivos de dados");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+			Model.DEFAULT_PATH = chooser.getSelectedFile().getAbsolutePath() + File.separator;
+		}		
+		
 		ArrayList<String> models = new ArrayList<String>();
 
 		final String path = "model";

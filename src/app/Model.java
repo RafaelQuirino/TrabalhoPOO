@@ -19,7 +19,7 @@ public class Model implements Serializable {
 	
 	private static final long serialVersionUID = -6743215224482974701L;
 
-	public static final String DEFAULT_PATH = 
+	public static String DEFAULT_PATH = 
 			System.getProperty("user.home") +
 			File.separator + 
 			"SadeData" + 
