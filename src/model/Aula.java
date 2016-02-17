@@ -51,6 +51,14 @@ public class Aula extends Model {
 	/**
 	 * 
 	 */
+	public Professor getProfessor()
+	{
+		return (Professor)Model.find(Professor.class, professorId);
+	}
+	
+	/**
+	 * 
+	 */
 	public int getFaltas()
 	{
 		return getTurma().getAlunos().size() - alunoIds.size();

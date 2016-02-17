@@ -36,6 +36,8 @@ public class Application {
 	
 	public static final String ALUNO_AVALIACOES = "aluno avaliacoes";
 	public static final String ALUNO_AULAS = "aluno aulas";
+	public static final String ALUNO_AULAS_RELATORIO = "aluno aulas relatorio";
+	public static final String ALUNO_AULAS_GERAR_RELATORIO = "aluno aulas gerar relatorio";
 	public static final String ALUNO_AVALIACOES_RELATORIO = "aluno avaliacoes relatorio";
 	public static final String ALUNO_AVALIACOES_GERAR_RELATORIO = "aluno av gerar relatorio";
 	

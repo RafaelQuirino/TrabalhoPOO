@@ -227,7 +227,7 @@ public class AdminHandler implements ActionListener {
 		{
 			String data[] = {
 				t.getNome(),
-				"Nao implementado!"
+				String.valueOf(t.getAlunos().size())
 			};
 			getScreen().getTurmaPanel().addRow(data);
 		}

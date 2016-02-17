@@ -22,6 +22,34 @@ public class Aluno extends Pessoa {
 	/**
 	 * 
 	 */
+	public ArrayList<Aula> getAulas()
+	{
+		ArrayList<Aula> aulas = new ArrayList<Aula>();
+		
+		for(Aula a : (ArrayList<Aula>)Model.all(Aula.class))
+			if(a.getTurmaId() == turmaId)
+				aulas.add(a);
+		
+		return aulas;
+	}
+	
+	/**
+	 * 
+	 */
+	public ArrayList<Aula> getProfessorAulas(int professorId)
+	{
+		ArrayList<Aula> aulas = new ArrayList<Aula>();
+		
+		for(Aula a : (ArrayList<Aula>)Model.all(Aula.class))
+			if(a.getTurmaId() == turmaId && a.getProfessorId() == professorId)
+				aulas.add(a);
+		
+		return aulas;
+	}
+	
+	/**
+	 * 
+	 */
 	public ArrayList<Professor> getProfessores()
 	{
 		ArrayList<Professor> professores = new ArrayList<Professor>();

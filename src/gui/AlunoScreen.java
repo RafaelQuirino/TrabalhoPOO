@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
 import app.Application;
+import model.Aula;
 import model.Professor;
 
 public class AlunoScreen extends Screen {
@@ -28,6 +29,12 @@ public class AlunoScreen extends Screen {
 		"Nota"
 	};
 	
+	private static final String AULAS_COLUMNS[] = {
+		"Data",
+		"Professor",
+		"Presente"
+	};
+	
 	// Instance fields --------------------------------------------------------
 	
 	private ListagemPanel listagemAvaliacoes;
@@ -35,6 +42,12 @@ public class AlunoScreen extends Screen {
 	private CadastroPanel avaliacoesCadastroRelatorio;
 	
 	private ListagemPanel avaliacoesRelatorio;
+	
+	private ListagemPanel listagemAulas;
+	
+	private CadastroPanel aulasCadastroRelatorio;
+	
+	private ListagemPanel aulasRelatorio;
 	
 	// Constructors -----------------------------------------------------------
 	
@@ -54,13 +67,27 @@ public class AlunoScreen extends Screen {
 		avaliacoesCadastroRelatorio = new CadastroPanel(
 			"Gerar Relatório", Application.ALUNO_AVALIACOES_GERAR_RELATORIO
 		);
-		
 		avaliacoesCadastroRelatorio.addRow("Professor", new JComboBox<Professor>());
 		
 		// avaliacoesRelatorio setup
 		
 		avaliacoesRelatorio = new ListagemPanel(AVALIACOES_COLUMNS);
 		
+		// listagemAulas setup
+		
+		listagemAulas = new ListagemPanel(AULAS_COLUMNS);
+		listagemAulas.addButton("Relatório", Application.ALUNO_AULAS_RELATORIO);
+		
+		// aulasCadastroRelatorio setup
+		
+		aulasCadastroRelatorio = new CadastroPanel(
+			"Gerar Relatório", Application.ALUNO_AULAS_GERAR_RELATORIO
+		);
+		aulasCadastroRelatorio.addRow("Professor", new JComboBox<Aula>());
+		
+		// aulasRelatorio setup
+		
+		aulasRelatorio = new ListagemPanel(AULAS_COLUMNS);
 	}
 	
 	// Instance Methods -------------------------------------------------------
@@ -71,6 +98,8 @@ public class AlunoScreen extends Screen {
 		
 		listagemAvaliacoes.setHandler(handler);
 		avaliacoesCadastroRelatorio.setHandler(handler);
+		listagemAulas.setHandler(handler);
+		aulasCadastroRelatorio.setHandler(handler);
 	}
 	
 	// Setters and Getters ----------------------------------------------------
@@ -85,5 +114,17 @@ public class AlunoScreen extends Screen {
 	
 	public ListagemPanel getAvaliacoesRelatorio(){
 		return avaliacoesRelatorio;
+	}
+	
+	public ListagemPanel getListagemAulas(){
+		return listagemAulas;
+	}
+	
+	public CadastroPanel getAulasCadastroRelatorio(){
+		return aulasCadastroRelatorio;
+	}
+	
+	public ListagemPanel getAulasRelatorio(){
+		return aulasRelatorio;
 	}
 }
