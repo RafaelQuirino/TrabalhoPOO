@@ -14,11 +14,24 @@ import app.Model;
 
 public class Launcher {
 
+	public static final String[] MODELS = {
+		"model.Aluno",
+		"model.Aula",
+		"model.Avaliacao",
+		"model.Pessoa",
+		"model.Professor",
+		"model.Turma",
+		"model.Usuario"
+	};
 	
 	public static void main(String args[]) throws Exception
 	{
 		showFileChooser();
-		initModels();
+		
+		for(String model : MODELS)
+			Model.initModel(Class.forName(model));
+		
+		//initModels();
 		
 		// Start application
 		
